@@ -1,0 +1,39 @@
+# name: Release
+
+# on:
+#   push:
+#     branches:
+#       - 'main'
+
+# defaults:
+#   run:
+#     shell: bash
+
+# jobs:
+#   changelog:
+#     name: Changelog PR or Release
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: pnpm/action-setup@v4
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: 18
+#           registry-url: 'https://registry.npmjs.org'
+#           cache: 'pnpm'
+#         env:
+#           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+#       - run: pnpm install
+#       - run: pnpm --filter astro-main-menu run build
+#       - name: Create Release Pull Request or Publish
+#         id: changesets
+#         uses: changesets/action@v1
+#         with:
+#           version: pnpm run version
+#           publish: pnpm changeset publish
+#           commit: 'chore: release'
+#           title: 'chore: release'
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+#           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

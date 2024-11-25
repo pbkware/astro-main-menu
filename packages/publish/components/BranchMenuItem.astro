@@ -1,0 +1,178 @@
+---
+import DownSvg from './DownSvg.astro';
+import LeafMenuItem from './LeafMenuItem.astro';
+import type { MenuItemDefinition } from './menu-item-definition';
+import BranchMenuItemSettings from './settings';
+import UpSvg from './UpSvg.astro';
+
+export interface Props {
+    settings: BranchMenuItemSettings;
+    menuItemDefinition: MenuItemDefinition;
+};
+
+const { settings, menuItemDefinition } = Astro.props;
+---
+
+{
+    (menuItemDefinition.children === undefined || menuItemDefinition.children.length === 0) ?
+        <LeafMenuItem class="leaf-menu-item" settings={settings} menuItemDefinition={menuItemDefinition} />
+    :
+        <div class="branch-menu-item">
+            <div class="up-down-menu-item">
+                <LeafMenuItem class="leaf-menu-item" settings={settings} menuItemDefinition={menuItemDefinition} />
+                <div class="up-down-menu-item-click">
+                    <div class="down-subbed-menu-item-icon">
+                        <DownSvg width="1em" height="1em" />
+                    </div>
+                    <div class="up-subbed-menu-item-icon">
+                        <UpSvg width="1em" height="1em" />
+                    </div>
+                </div>
+            </div>
+            {
+                (menuItemDefinition.children !== undefined && menuItemDefinition.children.length > 0) &&
+                    <menu class="sub-menu">
+                        { menuItemDefinition.children.map((childDefinition) =>
+                            <LeafMenuItem class="leaf-menu-item" settings={settings} menuItemDefinition={childDefinition} />
+                        )}
+                    </menu>
+            }
+        </div>
+}
+
+<style lang="scss" define:vars={{
+    wideSubMenuBackgroundColor: settings.wideSubMenuBackgroundColor,
+    wideSubMenuBoxShadow: settings.wideSubMenuBoxShadow,
+    wideSubMenuMargin: settings.wideSubMenuMargin,
+    wideSubMenuPadding: settings.wideSubMenuPadding,
+    narrowMenuItemPadding: settings.narrowMenuItemPadding,
+    upDownMenuItemClickBackgroundColor: settings.upDownMenuItemClickBackgroundColor,
+    narrowSubMenuFlexGap: settings.narrowSubMenuFlexGap,
+    narrowSubMenuMargin: settings.narrowSubMenuMargin,
+    narrowSubMenuPadding: settings.narrowSubMenuPadding,
+    narrowSubMenuMenuItemPadding: settings.narrowSubMenuMenuItemPadding,
+    narrowSubMenuBackgroundColor: settings.narrowSubMenuBackgroundColor,
+}}>
+    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+
+    .branch-menu-item {
+        position: relative;
+        display: block;
+        flex-direction: column;
+
+        > .up-down-menu-item {
+            display: flex;
+            align-items: stretch;
+
+            > .up-down-menu-item-click {
+                display: flex;
+                align-items: center;
+
+                > .up-subbed-menu-item-icon {
+                    display: none;
+                    align-items: center;
+                    width: 1em;
+                }
+
+                > .down-subbed-menu-item-icon {
+                    display: flex;
+                    align-items: center;
+                    width: 1em;
+                }
+            }
+        }
+
+        > .sub-menu {
+            position: absolute;
+            flex-direction: column;
+            gap: var(--narrowSubMenuFlexGap, 0.18rem);
+            margin: var(--wideSubMenuMargin, 0);
+            padding: var(--wideSubMenuPadding, 0.1rem 0.2rem 0.1rem 0.2rem);
+            background-color: var(--wideSubMenuBackgroundColor, #d0dae0);
+            box-shadow: var(--wideSubMenuBoxShadow, 0.12rem 0.12rem 0.12rem #2f3340);
+            display: none;
+        }
+    }
+
+    /* Make sure lines up with below and @media in NavBar */
+    @media screen and (hover: hover) and (width >= main-menu-config.$narrow-breakpoint) {
+        .branch-menu-item {
+            > .up-down-menu-item {
+                > .up-down-menu-item-click {
+                    pointer-events: none;
+                }
+            }
+
+            &:hover,
+            &:focus-within {
+                > .sub-menu {
+                    display: flex;
+                }
+
+                > .up-down-menu-item {
+                    > .up-down-menu-item-click {
+                        > .up-subbed-menu-item-icon {
+                            display: flex;
+                        }
+
+                        > .down-subbed-menu-item-icon {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /* Make sure lines up with above and @media in NavBar */
+    @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+        .branch-menu-item {
+            position: static;
+
+            > .up-down-menu-item {
+                display: flex;
+
+                > .leaf-menu-item {
+                    padding: var(--narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
+                }
+
+                > .up-down-menu-item-click {
+                    flex: 1 1 auto;
+                    padding-left: 0.2em;
+                    background-color: var(--upDownMenuItemClickBackgroundColor, #bcc3c8);
+                    cursor: pointer;
+                }
+            }
+
+            > .sub-menu {
+                position: static;
+                margin: var(--narrowSubMenuMargin, -0.18rem 0 0 0);
+                padding: var(--narrowSubMenuPadding, 0.36rem 0 0 0);
+                background-color: var(--narrowSubMenuBackgroundColor, #bcc3c8);
+                box-shadow: none;
+
+                > .leaf-menu-item {
+                    padding: var(--narrowSubMenuMenuItemPadding, 0 0 0 1.7rem);
+                }
+            }
+
+            &.dropped {
+                > .sub-menu {
+                    display: flex;
+                }
+
+                > .up-down-menu-item {
+                    > .up-down-menu-item-click {
+                        > .up-subbed-menu-item-icon {
+                            display: flex;
+                        }
+
+                        > .down-subbed-menu-item-icon {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+</style>

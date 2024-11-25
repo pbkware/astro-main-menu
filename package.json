@@ -1,0 +1,30 @@
+{
+  "name": "astro-main-menu-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "npm --filter astro-main-menu --filter www run build",
+    "dev": "npm run dev",
+    "lint": "prettier \"**/*.{js,ts,md,json}\"",
+    "version": "changeset version && pnpm install --no-frozen-lockfile --lockfile-only"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pbkware/astro-main-menu.git"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pbkware/astro-main-menu.gitissues"
+  },
+  "homepage": "https://github.com/pbkware/astro-main-menu.git#readme",
+  "workspaces": [
+    "demo",
+    "packages/publish"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

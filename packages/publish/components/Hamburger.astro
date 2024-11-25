@@ -1,0 +1,90 @@
+---
+import type { HamburgerSettings } from './settings';
+
+export interface Props {
+    class?: string;
+    settings: HamburgerSettings;
+    rest?: unknown;
+};
+
+const { class: classNames, settings, ...rest } = Astro.props;
+---
+
+<div class:list={['hamburger', classNames]} {...rest}></div>
+
+<style lang="scss" define:vars={{
+    activeTop: settings.activeTop,
+    activeLeft: settings.activeLeft,
+    activeRight: settings.activeRight,
+    width: settings.width,
+    height: settings.height,
+    pointer: settings.pointer,
+    topLineTop: settings.topLineTop,
+    topLineHeight: settings.topLineHeight,
+    topLineBackgroundColor: settings.topLineBackgroundColor,
+    topLineTransition: settings.topLineTransition,
+    bottomLineOffset: settings.bottomLineBottom,
+    bottomLineWidth: settings.bottomLineWidth,
+    bottomLineHeight: settings.bottomLineHeight,
+    bottomLineBackgroundColor: settings.bottomLineBackgroundColor,
+    bottomLineTransition: settings.bottomLineTransition,
+    narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
+}}>
+    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+
+    .hamburger {
+        display: none;
+        pointer-events: none;
+
+        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+            display: block;
+            pointer-events: all;
+            position: relative;
+            width: var(--width, 1.8em);
+            height: var(--height, 0.8em);
+            cursor: var(--pointer, pointer);
+            z-index:100;
+            overflow: hidden;
+
+            &::before {
+                top: var(--topLineTop, 0.1em);
+                right: 0;
+                content: '';
+                position: absolute;
+                width: var(--width, 1.8em);
+                height: var(--topLineHeight, 0.2em);
+                background-color: var(--topLineBackgroundColor, #3a62e5);
+                transition: var(--topLineTransition, all 0.3s ease-in-out);
+            }
+
+            &::after {
+                bottom: var(--bottomLineBottom, 0.1em);
+                right:0;
+                content: '';
+                position: absolute;
+                width: var(--bottomLineWidth, 1.4em);
+                height: var(--bottomLineHeight, 0.2em);
+                background-color: var(--bottomLineBackgroundColor, #3a62e5);
+                transition: var(--bottomLineTransition, transform 0.3s ease-in-out);
+            }
+
+            &.active {
+                position: absolute;
+                top: var(--activeTop, 0);
+                right: var(--activeRight, 0);
+                left: var(--activeLeft);
+                font-size: var(--narrowMainMenuFontSize, 1.8rem);
+
+                /* Rotate the before and after lines to create the close hamburger effect */
+                &::before {
+                    width: var(--bottomLineWidth, 1.4em);
+                    transform: rotate(-45deg) translate(-0.21em, 0.21em);
+                }
+
+                &::after {
+                    transform: rotate(45deg) translate(-0.21em, -0.21em);
+                }
+            }
+        }
+    }
+</style>

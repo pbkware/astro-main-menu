@@ -1,0 +1,67 @@
+---
+import BranchMenuItem from './BranchMenuItem.astro';
+import type { MenuItemDefinition } from './menu-item-definition';
+import type { MainMenuSettings } from './settings';
+
+export interface Props {
+    settings: MainMenuSettings;
+    menuItemDefinitions: readonly MenuItemDefinition[];
+};
+
+const { settings, menuItemDefinitions } = Astro.props;
+---
+
+<menu class="main-menu">
+    {
+        menuItemDefinitions.map((definition) => <BranchMenuItem settings={settings} menuItemDefinition={definition} />)
+    }
+</menu>
+
+<style lang="scss" define:vars={{
+    mainMenuFontFamily: settings.mainMenuFontFamily,
+    wideMainMenuFontSize: settings.wideMainMenuFontSize,
+    wideMainMenuBackgroundColor: settings.wideMainMenuBackgroundColor,
+    narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
+    narrowMainMenuBackgroundColor: settings.narrowMainMenuBackgroundColor,
+    narrowMainMenuMaxWidth: settings.narrowMainMenuMaxWidth,
+    mainMenuMargin: settings.mainMenuMargin,
+    mainMenuPadding: settings.mainMenuPadding,
+    wideMainMenuFlexGap: settings.wideMainMenuFlexGap,
+    narrowMainMenuTop: settings.narrowMainMenuTop,
+    narrowMainMenuLeft: settings.narrowMainMenuLeft,
+    narrowMainMenuRight: settings.narrowMainMenuRight,
+    narrowMainMenuFlexGap: settings.narrowMainMenuFlexGap,
+    narrowMainMenuBoxShadow: settings.narrowMainMenuBoxShadow,
+    narrowMenuItemPadding: settings.narrowMenuItemPadding,
+}}>
+    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+
+    .main-menu {
+        display: flex;
+        font-family: var(--mainMenuFontFamily, inherit);
+        font-size: var(--wideMainMenuFontSize, 1.2em);
+        background-color: var(--wideMainMenuBackgroundColor, inherit);
+        margin: var(--mainMenuMargin, 0);
+        padding: var(--mainMenuPadding, 0);
+        gap: var(--wideMainMenuFlexGap, .8em);
+
+        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+            display: none;
+
+            &.displayed {
+                display: flex;
+                width: 100%;
+                position: absolute;
+                flex-direction: column;
+                background-color: var(--narrowMainMenuBackgroundColor, #cddee8);
+                top: var(--narrowMainMenuTop, 0);
+                left: var(--narrowMainMenuLeft);
+                right: var(--narrowMainMenuRight, 0);
+                font-size: var(--narrowMainMenuFontSize, 1.8rem);
+                gap: var(--narrowMainMenuFlexGap, 0.18rem);
+                max-width: var(--narrowMainMenuMaxWidth, 15em);
+                box-shadow: var(--narrowMainMenuBoxShadow, 0 .1rem .4rem black);
+            }
+        }
+    }
+</style>

@@ -1,0 +1,54 @@
+---
+import type { MenuItemDefinition } from './menu-item-definition';
+import type { LeafMenuItemSettings } from './settings';
+
+export interface Props {
+    class: string;
+    settings: LeafMenuItemSettings;
+    menuItemDefinition: MenuItemDefinition;
+    rest?: unknown;
+};
+
+const { class: className, settings, menuItemDefinition, ...rest } = Astro.props;
+---
+
+{
+    <div
+        class:list={['leaf-menu-item', className]} {...rest}
+        title={menuItemDefinition.title}
+        data-url={menuItemDefinition.url}
+        data-id={menuItemDefinition.id}
+        data-data={menuItemDefinition.data}
+    >
+        {menuItemDefinition.text}
+    </div>
+}
+
+
+<style lang="scss" define:vars={{
+    menuItemTextDecoration: settings.menuItemTextDecoration,
+    menuItemColor: settings.menuItemColor,
+    menuItemMargin: settings.menuItemMargin,
+    menuItemPadding: settings.menuItemPadding,
+    menuItemHoverBackgroundColor: settings.menuItemHoverBackgroundColor,
+}}>
+    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+
+    .leaf-menu-item {
+        color: var(--menuItemColor, #021426);
+        display: block;
+        margin: var(--menuItemMargin, 0);
+        padding: var(--menuItemPadding, 0);
+        white-space: nowrap;
+        text-decoration: var(--menuItemTextDecoration, none);
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--menuItemHoverBackgroundColor, #97c7e7);
+        }
+
+        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+            padding: var(--narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
+        }
+    }
+</style>

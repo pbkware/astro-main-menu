@@ -1,0 +1,50 @@
+{
+  "name": "@pbkware/astro-main-menu",
+  "version": "0.0.1",
+  "type": "module",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "components",
+    "ts-out",
+    "index.d.ts",
+    "index.js",
+    "typings"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "pnpm run dev"
+  },
+  "author": {
+    "name": "Paul Klink",
+    "email": "paul@klink.au",
+    "url": "https://paul.klink.au"
+  },
+  "keywords": [
+    "astro",
+    "astro-integration",
+    "astro-component",
+    "menu",
+    "navigate"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pbkware/astro-main-menu.git",
+    "directory": "packages/integration"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pbkware/astro-main-menu/issues"
+  },
+  "homepage": "https://github.com/pbkware/astro-main-menu#readme",
+  "dependencies": {
+    "astro": "^4.16.10"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4",
+    "vite": "^5.0.0"
+  }
+}

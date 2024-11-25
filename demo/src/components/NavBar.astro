@@ -1,0 +1,157 @@
+---
+import { type MainMenuSettings, type MenuItemDefinition, LightBlueTones, Hamburger, MainMenu } from '@pbkware/astro-main-menu';
+
+// export const navBackgroundColor = '#d0dae0';
+export const navBackgroundColor = '#D6DAE0';
+
+const settings: MainMenuSettings = {
+    ...LightBlueTones.mainMenuSettings,
+	wideMainMenuBackgroundColor: navBackgroundColor,
+    wideSubMenuBackgroundColor: navBackgroundColor,
+}
+
+const menuItemDefinitions: MenuItemDefinition[] = [
+	{
+		text: 'Start',
+		url: '/',
+        children: [
+            {
+                text: 'Installation',
+                url: '/start/installation',
+            },
+            {
+                text: 'Quick',
+                url: '/start/quick',
+            },
+            {
+                text: 'Using',
+                url: '/start/using',
+            },
+        ]
+	},
+	{
+		text: 'Reference',
+		url: '/reference',
+	},
+	{
+		text: 'Other',
+		url: '/other',
+        children: [
+            {
+                text: 'Run JavaScript',
+                id: 'alert',
+                data: 'Menu item ran JavaScript/TypeScript which displayed this alert',
+            },
+            {
+                text: 'Why SASS',
+                url: '/other/why-sass',
+            },
+        ]
+	},
+	{
+		text: 'About',
+		url: '/about',
+	},
+];
+---
+
+<nav class="navbar">
+    <div class="navbar-narrow-left">
+        <span>«</span>
+    </div>
+
+    <div class="navbar-wide-left">
+        <span>«</span>
+    </div>
+
+    <MainMenu settings={settings}, menuItemDefinitions={menuItemDefinitions} />
+
+    <div class="narrow-heading">
+        <slot name="narrow-heading" />
+    </div>
+
+    <div class="navbar-wide-right">
+        <div class="navbar-wide-right-icon">
+            <span>»</span>
+        </div>
+        <Hamburger settings={settings} />
+    </div>
+</nav>
+
+<style lang="scss" define:vars={{
+    wideNavBarBackgroundColor: navBackgroundColor,
+    hamburgerWidth: LightBlueTones.hamburgerSettings.width,
+}}>
+    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+
+    .navbar {
+        width: 100%;
+        background-color: var(--wideNavBarBackgroundColor, #d0dae0);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        > .narrow-heading {
+            display: none;
+        }
+
+        > .navbar-narrow-left {
+            width: var(--hamburgerWidth, 1.8em);
+            display: none;
+        }
+
+        > .navbar-wide-left {
+            display: flex;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
+        > .navbar-wide-right {
+            display: flex;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
+        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+            > .narrow-heading {
+                display: flex;
+                align-items: center;
+                font-size: small;
+            }
+
+            > .navbar-narrow-left {
+                display: flex;
+                align-items: center;
+            }
+
+            > .navbar-wide-left {
+                display: none;
+            }
+
+            > .navbar-wide-right {
+                width: var(--hamburgerWidth, 1.8em);
+
+                > .navbar-wide-right-icon {
+                    display: none;
+                }
+            }
+        }
+    }
+</style>
+
+<script>
+    import { MenuClickProcessor } from '@pbkware/astro-main-menu';
+    const processor = MenuClickProcessor.get(); // This always needs to be called however only need processor if want to handle dataClick event
+
+    // Handle dataClick event.  
+    processor.dataClickEventer = (element, id, data, url) => {
+        if (id === 'alert') {
+            setTimeout(() => alert(data), 0);
+            return true; // Indicate event was handled.
+        } else {
+            return false; // Indicate event not handled.  processor will then try and navigate to URL
+        }
+    }
+</script>
