@@ -7,7 +7,9 @@ declare global {
     }
 }
 
+/** Processes menu item clicks.  Only access this class via MenuClickProcessor.get() as only a single instance can exist (singleton) */
 export class MenuClickProcessor {
+    /** Assign a handler to customise the behaviour of click events */
     dataClickEventer: MenuClickProcessor.DataClickEventer | undefined;
 
     private readonly _hamburgerIcon: Element;
@@ -112,12 +114,27 @@ export class MenuClickProcessor {
 }
 
 export namespace MenuClickProcessor {
-    export type DataClickEventer = (this: void, element: HTMLElement, id: string | undefined, data: string | undefined, url: string | undefined) => boolean; // true if handled
+    /** Returns true if click event was handled. Otherwise event was not handled and processor will attempt to navigate to URL */
+    export type DataClickEventer = (
+        this: void,
+        /** The HTML element which generated the click event */
+        element: HTMLElement,
+        /** The `id` value from the menu item's corresponding MenuItemDefinition. Can be used to easily identify which menu item was clicked. */
+        id: string | undefined,
+        /** The `data` value from the menu item's corresponding MenuItemDefinition. Data specific to this menu item which can be used in the dataClickEventer handler. */
+        data: string | undefined,
+        /** The `url` value from the menu item's corresponding MenuItemDefinition. A click on a menu item will navigate to this URL unless overridden in the dataClickEventer handler. */
+        url: string | undefined
+    ) => boolean; // true if handled
 
+    /** Class name used to specify hamburger is active */
     export const hamburgerActiveClassName = 'active';
+    /** Class name used to specify Main Menu is displayed */
     export const mainMenuDisplayedClassName = 'displayed';
+    /** Class name used to specify an expandable item (item with menu item and sub menu) has its sub menu expanded */
     export const expandableItemExpandedClassName = 'expanded';
 
+    /** Get singleton instance of MenuClickProcessor. If it does not already exist, it is created. */
     export function get(): MenuClickProcessor {
         if (window.pbkware_AstroMainMenu_MenuClickProcessor === undefined) {
             window.pbkware_AstroMainMenu_MenuClickProcessor = new MenuClickProcessor();
