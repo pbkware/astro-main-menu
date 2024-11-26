@@ -1,7 +1,6 @@
 ---
 import { type MainMenuSettings, type MenuItemDefinition, LightBlueTones, Hamburger, MainMenu } from '@pbkware/astro-main-menu';
 
-// export const navBackgroundColor = '#d0dae0';
 export const navBackgroundColor = '#D6DAE0';
 
 const settings: MainMenuSettings = {
@@ -43,6 +42,7 @@ const menuItemDefinitions: MenuItemDefinition[] = [
         children: [
             {
                 text: 'Run JavaScript',
+                title: 'Demonstrates using a menu item to run a TypeScript function',
                 id: 'alert',
                 data: 'Menu item ran JavaScript/TypeScript which displayed this alert',
             },
@@ -68,7 +68,7 @@ const menuItemDefinitions: MenuItemDefinition[] = [
         <span>«</span>
     </div>
 
-    <MainMenu settings={settings}, menuItemDefinitions={menuItemDefinitions} />
+    <MainMenu settings={settings} menuItemDefinitions={menuItemDefinitions} />
 
     <div class="narrow-heading">
         <slot name="narrow-heading" />

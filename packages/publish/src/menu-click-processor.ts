@@ -12,8 +12,8 @@ export class MenuClickProcessor {
 
     private readonly _hamburgerIcon: Element;
     private readonly _mainMenuComponent: Element;
-    private readonly _branchMenuItemElements = new Array<Element>();
-    private _droppedBranchMenuItemElement: Element | undefined;
+    private readonly _expandableItemElements = new Array<Element>();
+    private _expandedExpandableItemElement: Element | undefined;
 
 
     constructor() {
@@ -31,40 +31,40 @@ export class MenuClickProcessor {
                 mainMenuComponent.classList.remove(MenuClickProcessor.mainMenuDisplayedClassName);
 
                 hamburgerIcon.addEventListener('click', () => {
-                    this.ensureBranchNotDropped();
+                    this.ensureNotExpanded();
                     hamburgerIcon.classList.toggle(MenuClickProcessor.hamburgerActiveClassName);
                     mainMenuComponent.classList.toggle(MenuClickProcessor.mainMenuDisplayedClassName);
                 });
 
-                const branchMenuItemElementList = mainMenuComponent.querySelectorAll('.branch-menu-item');
-                branchMenuItemElementList.forEach((element) => {
+                const expandableItemElementList = mainMenuComponent.querySelectorAll('.expandable-item');
+                expandableItemElementList.forEach((element) => {
                     const upDownMenuItemClickElement = element.querySelector('.up-down-menu-item-click');
                     if (upDownMenuItemClickElement === null) {
                         throw new Error(`UpDownMenuItemClick element for "${element.innerHTML}" not found`);
                     } else {
-                        this._branchMenuItemElements.push(element);
-                        element.classList.remove(MenuClickProcessor.branchMenuItemDroppedClassName);
+                        this._expandableItemElements.push(element);
+                        element.classList.remove(MenuClickProcessor.expandableItemExpandedClassName);
 
                         upDownMenuItemClickElement.addEventListener('click', () => {
 
-                            if (this._droppedBranchMenuItemElement === undefined) {
-                                this._droppedBranchMenuItemElement = element;
-                                element.classList.toggle(MenuClickProcessor.branchMenuItemDroppedClassName);
+                            if (this._expandedExpandableItemElement === undefined) {
+                                this._expandedExpandableItemElement = element;
+                                element.classList.toggle(MenuClickProcessor.expandableItemExpandedClassName);
                             } else {
-                                if (element === this._droppedBranchMenuItemElement) {
-                                    element.classList.toggle(MenuClickProcessor.branchMenuItemDroppedClassName);
+                                if (element === this._expandedExpandableItemElement) {
+                                    element.classList.toggle(MenuClickProcessor.expandableItemExpandedClassName);
                                 } else {
-                                    this._droppedBranchMenuItemElement.classList.remove(MenuClickProcessor.branchMenuItemDroppedClassName);
-                                    this._droppedBranchMenuItemElement = element;
-                                    element.classList.add(MenuClickProcessor.branchMenuItemDroppedClassName);
+                                    this._expandedExpandableItemElement.classList.remove(MenuClickProcessor.expandableItemExpandedClassName);
+                                    this._expandedExpandableItemElement = element;
+                                    element.classList.add(MenuClickProcessor.expandableItemExpandedClassName);
                                 }
                             }
                         });
                     }
                 });
 
-                const leafMenuItemElementList = mainMenuComponent.querySelectorAll('.leaf-menu-item');
-                leafMenuItemElementList.forEach((element) => {
+                const menuItemElementList = mainMenuComponent.querySelectorAll('.menu-item');
+                menuItemElementList.forEach((element) => {
                     if (element instanceof HTMLElement) {
                         element.addEventListener('click', () => {
                             const dataset = element.dataset;
@@ -97,15 +97,15 @@ export class MenuClickProcessor {
         return;
     }
 
-    private ensureBranchNotDropped() {
-        if (this._droppedBranchMenuItemElement !== undefined) {
-            this._droppedBranchMenuItemElement.classList.remove(MenuClickProcessor.branchMenuItemDroppedClassName);
-            this._droppedBranchMenuItemElement = undefined;
+    private ensureNotExpanded() {
+        if (this._expandedExpandableItemElement !== undefined) {
+            this._expandedExpandableItemElement.classList.remove(MenuClickProcessor.expandableItemExpandedClassName);
+            this._expandedExpandableItemElement = undefined;
         }
     }
 
     private deactivateNarrow() {
-        this.ensureBranchNotDropped();
+        this.ensureNotExpanded();
         this._hamburgerIcon.classList.remove(MenuClickProcessor.hamburgerActiveClassName);
         this._mainMenuComponent.classList.remove(MenuClickProcessor.mainMenuDisplayedClassName);
     }
@@ -116,7 +116,7 @@ export namespace MenuClickProcessor {
 
     export const hamburgerActiveClassName = 'active';
     export const mainMenuDisplayedClassName = 'displayed';
-    export const branchMenuItemDroppedClassName = 'dropped';
+    export const expandableItemExpandedClassName = 'expanded';
 
     export function get(): MenuClickProcessor {
         if (window.pbkware_AstroMainMenu_MenuClickProcessor === undefined) {

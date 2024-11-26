@@ -1,25 +1,28 @@
 ---
+import type { MenuItemDefinition } from '../ts-out/menu-item-definition';
+import { type ExpandableItemSettings } from '../ts-out/settings';
 import DownSvg from './DownSvg.astro';
-import LeafMenuItem from './LeafMenuItem.astro';
-import type { MenuItemDefinition } from './menu-item-definition';
-import BranchMenuItemSettings from './settings';
+import MenuItem from './MenuItem.astro';
 import UpSvg from './UpSvg.astro';
 
 export interface Props {
-    settings: BranchMenuItemSettings;
+    class?: string;
+    menuItemClass?: string;
+    settings?: ExpandableItemSettings;
     menuItemDefinition: MenuItemDefinition;
+    rest?: unknown;
 };
 
-const { settings, menuItemDefinition } = Astro.props;
+const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest } = Astro.props;
 ---
 
 {
     (menuItemDefinition.children === undefined || menuItemDefinition.children.length === 0) ?
-        <LeafMenuItem class="leaf-menu-item" settings={settings} menuItemDefinition={menuItemDefinition} />
+        <MenuItem class:list={[menuItemClass]} class="menu-item" settings={settings} menuItemDefinition={menuItemDefinition} {...rest} />
     :
-        <div class="branch-menu-item">
+        <div class:list={['expandable-item', classNames]} {...rest}>
             <div class="up-down-menu-item">
-                <LeafMenuItem class="leaf-menu-item" settings={settings} menuItemDefinition={menuItemDefinition} />
+                <MenuItem class:list={[menuItemClass]} class="menu-item" settings={settings} menuItemDefinition={menuItemDefinition} {...rest} />
                 <div class="up-down-menu-item-click">
                     <div class="down-subbed-menu-item-icon">
                         <DownSvg width="1em" height="1em" />
@@ -33,7 +36,7 @@ const { settings, menuItemDefinition } = Astro.props;
                 (menuItemDefinition.children !== undefined && menuItemDefinition.children.length > 0) &&
                     <menu class="sub-menu">
                         { menuItemDefinition.children.map((childDefinition) =>
-                            <LeafMenuItem class="leaf-menu-item" settings={settings} menuItemDefinition={childDefinition} />
+                            <MenuItem class:list={[menuItemClass]} class="menu-item" settings={settings} menuItemDefinition={childDefinition} {...rest} />
                         )}
                     </menu>
             }
@@ -41,21 +44,21 @@ const { settings, menuItemDefinition } = Astro.props;
 }
 
 <style lang="scss" define:vars={{
-    wideSubMenuBackgroundColor: settings.wideSubMenuBackgroundColor,
-    wideSubMenuBoxShadow: settings.wideSubMenuBoxShadow,
-    wideSubMenuMargin: settings.wideSubMenuMargin,
-    wideSubMenuPadding: settings.wideSubMenuPadding,
-    narrowMenuItemPadding: settings.narrowMenuItemPadding,
-    upDownMenuItemClickBackgroundColor: settings.upDownMenuItemClickBackgroundColor,
-    narrowSubMenuFlexGap: settings.narrowSubMenuFlexGap,
-    narrowSubMenuMargin: settings.narrowSubMenuMargin,
-    narrowSubMenuPadding: settings.narrowSubMenuPadding,
-    narrowSubMenuMenuItemPadding: settings.narrowSubMenuMenuItemPadding,
-    narrowSubMenuBackgroundColor: settings.narrowSubMenuBackgroundColor,
+    wideSubMenuBackgroundColor: settings?.wideSubMenuBackgroundColor,
+    wideSubMenuBoxShadow: settings?.wideSubMenuBoxShadow,
+    wideSubMenuMargin: settings?.wideSubMenuMargin,
+    wideSubMenuPadding: settings?.wideSubMenuPadding,
+    narrowMenuItemPadding: settings?.narrowMenuItemPadding,
+    upDownMenuItemClickBackgroundColor: settings?.upDownMenuItemClickBackgroundColor,
+    narrowSubMenuFlexGap: settings?.narrowSubMenuFlexGap,
+    narrowSubMenuMargin: settings?.narrowSubMenuMargin,
+    narrowSubMenuPadding: settings?.narrowSubMenuPadding,
+    narrowSubMenuMenuItemPadding: settings?.narrowSubMenuMenuItemPadding,
+    narrowSubMenuBackgroundColor: settings?.narrowSubMenuBackgroundColor,
 }}>
     @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
-    .branch-menu-item {
+    .expandable-item {
         position: relative;
         display: block;
         flex-direction: column;
@@ -96,7 +99,7 @@ const { settings, menuItemDefinition } = Astro.props;
 
     /* Make sure lines up with below and @media in NavBar */
     @media screen and (hover: hover) and (width >= main-menu-config.$narrow-breakpoint) {
-        .branch-menu-item {
+        .expandable-item {
             > .up-down-menu-item {
                 > .up-down-menu-item-click {
                     pointer-events: none;
@@ -126,13 +129,13 @@ const { settings, menuItemDefinition } = Astro.props;
 
     /* Make sure lines up with above and @media in NavBar */
     @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
-        .branch-menu-item {
+        .expandable-item {
             position: static;
 
             > .up-down-menu-item {
                 display: flex;
 
-                > .leaf-menu-item {
+                > .menu-item {
                     padding: var(--narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
                 }
 
@@ -151,12 +154,12 @@ const { settings, menuItemDefinition } = Astro.props;
                 background-color: var(--narrowSubMenuBackgroundColor, #bcc3c8);
                 box-shadow: none;
 
-                > .leaf-menu-item {
+                > .menu-item {
                     padding: var(--narrowSubMenuMenuItemPadding, 0 0 0 1.7rem);
                 }
             }
 
-            &.dropped {
+            &.expanded {
                 > .sub-menu {
                     display: flex;
                 }

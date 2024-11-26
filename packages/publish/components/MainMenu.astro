@@ -1,38 +1,48 @@
 ---
-import BranchMenuItem from './BranchMenuItem.astro';
-import type { MenuItemDefinition } from './menu-item-definition';
-import type { MainMenuSettings } from './settings';
+import type { MenuItemDefinition } from '../ts-out/menu-item-definition';
+import type { MainMenuSettings } from '../ts-out/settings';
+import ExpandableItem from './ExpandableItem.astro';
 
 export interface Props {
-    settings: MainMenuSettings;
+    class?: string;
+    expandableItemClass?: string;
+    menuItemClass?: string;
+    settings?: MainMenuSettings;
     menuItemDefinitions: readonly MenuItemDefinition[];
+    rest?: unknown;
 };
 
-const { settings, menuItemDefinitions } = Astro.props;
+const { class: classNames, expandableItemClass, menuItemClass, settings, menuItemDefinitions, ...rest } = Astro.props;
 ---
 
-<menu class="main-menu">
+<menu class:list={['main-menu', classNames]} {...rest}>
     {
-        menuItemDefinitions.map((definition) => <BranchMenuItem settings={settings} menuItemDefinition={definition} />)
+        menuItemDefinitions.map((definition) => <ExpandableItem
+            class={expandableItemClass}
+            menuItemClass={menuItemClass}
+            settings={settings}
+            menuItemDefinition={definition}
+            {...rest}
+        />)
     }
 </menu>
 
 <style lang="scss" define:vars={{
-    mainMenuFontFamily: settings.mainMenuFontFamily,
-    wideMainMenuFontSize: settings.wideMainMenuFontSize,
-    wideMainMenuBackgroundColor: settings.wideMainMenuBackgroundColor,
-    narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
-    narrowMainMenuBackgroundColor: settings.narrowMainMenuBackgroundColor,
-    narrowMainMenuMaxWidth: settings.narrowMainMenuMaxWidth,
-    mainMenuMargin: settings.mainMenuMargin,
-    mainMenuPadding: settings.mainMenuPadding,
-    wideMainMenuFlexGap: settings.wideMainMenuFlexGap,
-    narrowMainMenuTop: settings.narrowMainMenuTop,
-    narrowMainMenuLeft: settings.narrowMainMenuLeft,
-    narrowMainMenuRight: settings.narrowMainMenuRight,
-    narrowMainMenuFlexGap: settings.narrowMainMenuFlexGap,
-    narrowMainMenuBoxShadow: settings.narrowMainMenuBoxShadow,
-    narrowMenuItemPadding: settings.narrowMenuItemPadding,
+    mainMenuFontFamily: settings?.mainMenuFontFamily,
+    wideMainMenuFontSize: settings?.wideMainMenuFontSize,
+    wideMainMenuBackgroundColor: settings?.wideMainMenuBackgroundColor,
+    narrowMainMenuFontSize: settings?.narrowMainMenuFontSize,
+    narrowMainMenuBackgroundColor: settings?.narrowMainMenuBackgroundColor,
+    narrowMainMenuMaxWidth: settings?.narrowMainMenuMaxWidth,
+    mainMenuMargin: settings?.mainMenuMargin,
+    mainMenuPadding: settings?.mainMenuPadding,
+    wideMainMenuFlexGap: settings?.wideMainMenuFlexGap,
+    narrowMainMenuTop: settings?.narrowMainMenuTop,
+    narrowMainMenuLeft: settings?.narrowMainMenuLeft,
+    narrowMainMenuRight: settings?.narrowMainMenuRight,
+    narrowMainMenuFlexGap: settings?.narrowMainMenuFlexGap,
+    narrowMainMenuBoxShadow: settings?.narrowMainMenuBoxShadow,
+    narrowMenuItemPadding: settings?.narrowMenuItemPadding,
 }}>
     @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 

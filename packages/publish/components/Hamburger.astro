@@ -1,9 +1,9 @@
 ---
-import type { HamburgerSettings } from './settings';
+import type { HamburgerSettings } from '../ts-out/settings';
 
 export interface Props {
     class?: string;
-    settings: HamburgerSettings;
+    settings?: HamburgerSettings;
     rest?: unknown;
 };
 
@@ -13,22 +13,22 @@ const { class: classNames, settings, ...rest } = Astro.props;
 <div class:list={['hamburger', classNames]} {...rest}></div>
 
 <style lang="scss" define:vars={{
-    activeTop: settings.activeTop,
-    activeLeft: settings.activeLeft,
-    activeRight: settings.activeRight,
-    width: settings.width,
-    height: settings.height,
-    pointer: settings.pointer,
-    topLineTop: settings.topLineTop,
-    topLineHeight: settings.topLineHeight,
-    topLineBackgroundColor: settings.topLineBackgroundColor,
-    topLineTransition: settings.topLineTransition,
-    bottomLineOffset: settings.bottomLineBottom,
-    bottomLineWidth: settings.bottomLineWidth,
-    bottomLineHeight: settings.bottomLineHeight,
-    bottomLineBackgroundColor: settings.bottomLineBackgroundColor,
-    bottomLineTransition: settings.bottomLineTransition,
-    narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
+    activeTop: settings?.activeTop,
+    activeLeft: settings?.activeLeft,
+    activeRight: settings?.activeRight,
+    width: settings?.width,
+    height: settings?.height,
+    pointer: settings?.pointer,
+    topLineTop: settings?.topLineTop,
+    topLineHeight: settings?.topLineHeight,
+    topLineBackgroundColor: settings?.topLineBackgroundColor,
+    topLineTransition: settings?.topLineTransition,
+    bottomLineOffset: settings?.bottomLineBottom,
+    bottomLineWidth: settings?.bottomLineWidth,
+    bottomLineHeight: settings?.bottomLineHeight,
+    bottomLineBackgroundColor: settings?.bottomLineBackgroundColor,
+    bottomLineTransition: settings?.bottomLineTransition,
+    narrowMainMenuFontSize: settings?.narrowMainMenuFontSize,
 }}>
     @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 

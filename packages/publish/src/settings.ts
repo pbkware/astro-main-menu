@@ -1,4 +1,4 @@
-export interface MainMenuSettings extends BranchMenuItemSettings, CommonHamburgerAndMainMenuSettings {
+export interface MainMenuSettings extends ExpandableItemSettings, CommonHamburgerAndMainMenuSettings {
     mainMenuFontFamily?: string;
     wideMainMenuFontSize?: string;
     wideMainMenuBackgroundColor?: string;
@@ -14,7 +14,7 @@ export interface MainMenuSettings extends BranchMenuItemSettings, CommonHamburge
     narrowMainMenuBoxShadow?: string;
 }
 
-export interface BranchMenuItemSettings extends LeafMenuItemSettings {
+export interface ExpandableItemSettings extends MenuItemSettings {
     wideSubMenuBackgroundColor?: string;
     wideSubMenuBoxShadow?: string;
     wideSubMenuMargin?: string;
@@ -28,7 +28,7 @@ export interface BranchMenuItemSettings extends LeafMenuItemSettings {
     narrowSubMenuBackgroundColor?: string;
 }
 
-export interface LeafMenuItemSettings {
+export interface MenuItemSettings {
     menuItemTextDecoration?: string;
     menuItemColor?: string;
     menuItemMargin?: string;
@@ -65,7 +65,7 @@ export namespace LightBlueTones {
     export const wideMenuBackgroundColor = '#d0dae0';
     const narrowMainMenuFontSize = '1.8rem';
 
-    namespace BranchMenuItemSettings {
+    namespace ExpandableItemSettings {
         export const narrowSubMenuBackgroundColor = '#bcc3c8';
     }
 
@@ -91,12 +91,12 @@ export namespace LightBlueTones {
         wideSubMenuMargin: '0',
         wideSubMenuPadding: '0.2em 0.2em 0.1em 0.2em',
         narrowMenuItemPadding: '0 0.2em 0 0.8rem',
-        upDownMenuItemClickBackgroundColor: BranchMenuItemSettings.narrowSubMenuBackgroundColor,
+        upDownMenuItemClickBackgroundColor: ExpandableItemSettings.narrowSubMenuBackgroundColor,
         narrowSubMenuFlexGap: '0.18em',
         narrowSubMenuMargin: '-0.18rem 0 0 0',
         narrowSubMenuPadding: '0.36rem 0 0 0',
         narrowSubMenuMenuItemPadding: '0 0 0 1.8rem',
-        narrowSubMenuBackgroundColor: BranchMenuItemSettings.narrowSubMenuBackgroundColor,
+        narrowSubMenuBackgroundColor: ExpandableItemSettings.narrowSubMenuBackgroundColor,
 
         menuItemTextDecoration: 'none',
         menuItemColor: '#021426',
