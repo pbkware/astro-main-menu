@@ -11,22 +11,49 @@ const pageTitle = frontmatter.title;
     <head>
         <meta charset="utf-8" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width" />
-        <title>Astro Icon</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Astro Main Menu Demo</title>
     </head>
 
     <body>
         <NavBar>
             <span class="narrow-heading" slot="narrow-heading">{narrowHeading}</span>
         </NavBar>
-        <h1>{pageTitle}</h1>
-        <slot />
+
+        <div id="titleAndContent">
+            <h1>{pageTitle}</h1>
+            <slot />
+        </div>
     </body>
 </html>
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
         margin: 0 auto;
         padding: 0;
     }
+
+    #titleAndContent {
+        width: 100%;
+        max-width: 80ch;
+        padding: 0 1rem;
+        line-height: 1.5;
+
+            /* Table */
+        table,
+        th,
+        td {
+            border: 1px solid darkslategrey;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: .3em;
+        }
+    }
+
 </style>

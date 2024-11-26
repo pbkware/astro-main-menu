@@ -22,9 +22,5 @@
   "workspaces": [
     "demo",
     "packages/publish"
-  ],
-  "dependencies": {
-  },
-  "devDependencies": {
-  }
+  ]
 }
