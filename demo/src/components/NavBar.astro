@@ -1,18 +1,17 @@
 ---
-import { type MainMenuSettings, type MenuItemDefinition, LightBlueTones, Hamburger, MainMenu } from '@pbkware/astro-main-menu';
+import { type HamburgerSettings, type MainMenuSettings, type MenuItemDefinition, DefaultSettings, Hamburger, MainMenu } from '@pbkware/astro-main-menu';
 
 export const navBackgroundColor = '#D6DAE0';
 
-const settings: MainMenuSettings = {
-    ...LightBlueTones.mainMenuSettings,
-	wideMainMenuBackgroundColor: navBackgroundColor,
+const mainMenuSettings: MainMenuSettings = {
+    wideMainMenuBackgroundColor: navBackgroundColor,
     wideSubMenuBackgroundColor: navBackgroundColor,
 }
 
 const menuItemDefinitions: MenuItemDefinition[] = [
-	{
-		text: 'Start',
-		url: '/',
+    {
+        text: 'Start',
+        url: '/',
         children: [
             {
                 text: 'Home',
@@ -31,14 +30,14 @@ const menuItemDefinitions: MenuItemDefinition[] = [
                 url: '/start/using',
             },
         ]
-	},
-	{
-		text: 'Reference',
-		url: '/reference',
-	},
-	{
-		text: 'Other',
-		url: '/other',
+    },
+    {
+        text: 'Reference',
+        url: '/reference',
+    },
+    {
+        text: 'Other',
+        url: '/other',
         children: [
             {
                 text: 'Run JavaScript',
@@ -51,11 +50,11 @@ const menuItemDefinitions: MenuItemDefinition[] = [
                 url: '/other/why-sass',
             },
         ]
-	},
-	{
-		text: 'About',
-		url: '/about',
-	},
+    },
+    {
+        text: 'About',
+        url: '/about',
+    },
 ];
 ---
 
@@ -68,7 +67,7 @@ const menuItemDefinitions: MenuItemDefinition[] = [
         <span>«</span>
     </div>
 
-    <MainMenu settings={settings} menuItemDefinitions={menuItemDefinitions} />
+    <MainMenu settings={mainMenuSettings} menuItemDefinitions={menuItemDefinitions} />
 
     <div class="narrow-heading">
         <slot name="narrow-heading" />
@@ -78,13 +77,13 @@ const menuItemDefinitions: MenuItemDefinition[] = [
         <div class="navbar-wide-right-icon">
             <span>»</span>
         </div>
-        <Hamburger settings={settings} />
+        <Hamburger />
     </div>
 </nav>
 
 <style lang="scss" define:vars={{
     wideNavBarBackgroundColor: navBackgroundColor,
-    hamburgerWidth: LightBlueTones.hamburgerSettings.width,
+    hamburgerWidth: DefaultSettings.hamburgerSettings.width,
 }}>
     @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 

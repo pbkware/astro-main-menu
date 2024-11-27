@@ -3,7 +3,7 @@ layout: ../../layouts/Base.astro
 title: 'Quick start'
 ---
 
-This tutorial will quickly enable you to create an Astro website with a main menu similar to this demo website.
+This tutorial will step you through creating an Astro website with a main menu similar to this demo website.
 
 Steps:
 1. Create a new Astro project

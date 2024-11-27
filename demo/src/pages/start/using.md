@@ -12,9 +12,15 @@ To use the Astro Main Menu, you need to:
 
 ## MainMenu and Hamburger components
 
+Main Menu requires that one MainMenu and one Hamburger component be included in a Astro website.  Normally they would be placed within a HTML \<nav> element however this is not required.  They can even be installed in different components/pages/layouts.
+
+Since the Main Menu is normally included on every page, a good arrangement is to include them both in a navigation component and then include that component in a base layout.
+
+Below is an example of using a centered Main Menu (based on the code for this website).
+
 ```ts
 ---
-import { LightBlueTones, Hamburger, MainMenu } from '@pbkware/astro-main-menu';
+import { DefaultSettings, Hamburger, MainMenu } from '@pbkware/astro-main-menu';
 
 const navBackgroundColor = '#D6DAE0';
 ---
@@ -38,13 +44,13 @@ const navBackgroundColor = '#D6DAE0';
     <div class="navbar-wide-right-icon">
       <span>»</span>
     </div>
-    <Hamburger settings={settings} />
+    <Hamburger />
   </div>
 </nav>
 
 <style lang="scss" define:vars={{
   wideNavBarBackgroundColor: navBackgroundColor,
-  hamburgerWidth: LightBlueTones.hamburgerSettings.width,
+  hamburgerWidth: DefaultSettings.hamburgerSettings.width,
 }}>
   @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
@@ -220,6 +226,110 @@ The event handler should return a boolean indicating whether it handled the clic
 </script>
 ```
 ## Wide/Narrow breakpoint
+
+MainMenu (and Hamburger) is displayed differently on wide and narrow devices.  In wide devices (eg desktops), MainMenu is displayed with top level menu items in a horizontal bar.  In narrow devices (eg. mobiles), it is displayed with top level menu items in a vertical bar and do not respond to hover.  Note that if a device does not support hover, then MainMenu is displayed in the same way as on a narrow device.
+
+The following @media query is used to determine whether MainMenu and Hamburger are displayed as narrow:
+```scss
+@use '/src/styles/scss/main-menu-config';
+@media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+  ...
+}
+```
+
+This @media query is used in several places within MainMenu and Hamburger.  It can also be used when implementing custom styling.
+
+The width below which narrow display is used, is specified in the $narrow-breakpoint SCSS variable within the ```_main-menu-config.scss``` ([see installation](./installation#add-_main-menu-configscss-file)). This width should be wider than both the width of MainMenu bar when displayed wide and the width of general mobile devices (but not necessarily tablet devices).  It is preferable to specify the width in units of ```rem```.  (Note that it is not possible to use ```em``` units in @media queries).
+
 ## Styling
-### Settings
-### Classes
+
+The MainMenu and Hamburger components can be styled using either their:
+* [**```settings``` attribute**](#styling-using-settings-attribute) (the easy way)
+* [**class attributes**](#styling-using-class-attributes) (the more powerful way)
+
+### Styling using settings attribute
+
+This is the easy way of styling the MainMenu and Hamburger components as you do not have to understand the HTML and CSS used internally within these components.  You also do not have to use the @media query to distinguish between wide and narrow.
+
+Both the MainMenu and Hamburger components have a ```settings``` attribute.  These can optionally be supplied with a settings object; respectively of type [```MainMenuSettings```](../reference#mainmenusettings) and [```HamburgerSettings```](../reference#hamburgersettings).
+
+All of the properties in these settings object are optional.  If a property is not defined, its respective CSS uses its default value.  If the settings object is not supplied, all the relevant CSS use the default values.  The ```DefaultSettings``` namespace exports setting objects with the default values:
+
+```ts
+export namespace DefaultSettings {
+  export const wideMenuBackgroundColor; // can be used to set background color of containing HTML element
+  export const mainMenuSettings: MainMenuSettings;
+  export const hamburgerSettings: HamburgerSettings;
+}
+```
+
+Below is an example of using these settings:
+
+```ts
+---
+import {
+  type MainMenuSettings,
+  type MenuItemDefinition,
+  DefaultSettings,
+  Hamburger,
+  MainMenu
+} from '@pbkware/astro-main-menu';
+
+export const navBackgroundColor = '#D6DAE0'; // used to style nav background color
+
+const mainMenuSettings: MainMenuSettings = {
+  wideMainMenuBackgroundColor: navBackgroundColor,
+  wideSubMenuBackgroundColor: navBackgroundColor,
+}
+
+const hamburgerSettings: HamburgerSettings = {
+    ...DefaultSettings.hamburgerSettings, // not really needed here as undefined settings use default values
+    bottomLineBackgroundColor: 'red',
+}
+---
+
+<nav>
+  <MainMenu settings={mainMenuSettings} menuItemDefinitions={menuItemDefinitions} />
+  <Hamburger settings={hamburgerSettings} />
+</nav>
+```
+
+### Styling using class attributes
+
+Both the MainMenu and Hamburger components can optionally be [passed styled classes](https://docs.astro.build/en/guides/styling/#passing-a-class-to-a-child-component) which allow the containing class to style these components.  In addition, the MainMenu can also pass styled classes through its `expandableItemClass` and `menuItemClass` attributes.  These are passed on down to the respective classes within MainMenu.
+
+The following class names should be used:
+* `main-menu` - for styling the MainMenu component
+* `expandable-item` - for styling ExpandableItem components
+* `menu-item` - for styling MenuItem components
+* `hamburger` - for styling the Hamburger component
+
+Note that using attributes such as `expandableItemClass` and `menuItemClass` to pass classes down to lower level contained components, is not a documented Astro feature.  It works now, and probably will in the future.  However, be aware that there is a possibility that future releases of Astro may break this capability.
+
+The example below demonstrates how class styling can be used to put borders around MainMenu, its MenuItems and Hamburger:
+
+```ts
+<nav>
+  <MainMenu
+    class="main-menu"
+    menuItemDefinitions={menuItemDefinitions}
+    menuItemClass="menu-item"
+  />
+  <Hamburger class="hamburger"/>
+</nav>
+
+<style>
+  .menu-item {
+    border: solid green;
+  }
+  .main-menu {
+    border: solid red;
+  }
+  .hamburger {
+    border: solid black;
+  }
+</style>
+```
+
+Using classes to style MainMenu and Hamburger provides greater styling potential however you are required to understand the internals of MainMenu and/or Hamburger and quite likely use @media queries.  Also this styling will be given less emphasis in respect to backwards compatibility compared to using settings.
+
