@@ -29,8 +29,12 @@ export interface MainMenuSettings extends ExpandableItemSettings, CommonHamburge
 }
 
 export interface ExpandableItemSettings extends MenuItemSettings {
-    /** background-color applied to UpDownMenuItemClick element within ExpandableItem. @defaultValue #bcc3c8 */
-    upDownMenuItemClickBackgroundColor?: string;
+    /** background-color applied to expand-control element within ExpandableItem. @defaultValue #bcc3c8 */
+    expandControlBackgroundColor?: string;
+    /** color applied to the not expanded Icon expand-control element within ExpandableItem. @defaultValue #bcc3c8 */
+    notExpandedIconColor?: string;
+    /** color applied to the expanded Icon expand-control element within ExpandableItem. @defaultValue #bcc3c8 */
+    expandedIconColor?: string;
     /** background-color applied to SubMenu within ExpandableItem when wide. @defaultValue #d0dae0 */
     wideSubMenuBackgroundColor?: string;
     /** box-shadow applied to SubMenu within ExpandableItem when wide. @defaultValue 0.14em 0.14em 0.14em #2f3340 */
@@ -113,6 +117,7 @@ export namespace DefaultSettings {
 
     namespace ExpandableItemSettings {
         export const narrowSubMenuBackgroundColor = '#bcc3c8';
+        export const notExpandedIconColor = '#586f8a';
     }
 
     export const mainMenuSettings: MainMenuSettings = {
@@ -132,12 +137,14 @@ export namespace DefaultSettings {
         narrowMainMenuFlexGap: '0.18em',
         narrowMainMenuBoxShadow: '0 .1em .4em black',
 
+        expandControlBackgroundColor: ExpandableItemSettings.narrowSubMenuBackgroundColor,
+        notExpandedIconColor: ExpandableItemSettings.notExpandedIconColor,
+        expandedIconColor: ExpandableItemSettings.notExpandedIconColor,
         wideSubMenuBackgroundColor: wideMenuBackgroundColor,
         wideSubMenuBoxShadow: '0.14em 0.14em 0.14em #2f3340',
         wideSubMenuMargin: '0',
         wideSubMenuPadding: '0.2em 0.2em 0.1em 0.2em',
         narrowMenuItemPadding: '0 0.2em 0 0.8rem',
-        upDownMenuItemClickBackgroundColor: ExpandableItemSettings.narrowSubMenuBackgroundColor,
         narrowSubMenuFlexGap: '0.18em',
         narrowSubMenuMargin: '-0.18rem 0 0 0',
         narrowSubMenuPadding: '0.36rem 0 0 0',

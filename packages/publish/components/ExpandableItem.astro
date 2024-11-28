@@ -1,9 +1,9 @@
 ---
 import type { MenuItemDefinition } from '../ts-out/menu-item-definition';
 import { type ExpandableItemSettings } from '../ts-out/settings';
-import DownSvg from './DownSvg.astro';
+import ExpandedSvg from './ExpandedSvg.astro';
 import MenuItem from './MenuItem.astro';
-import UpSvg from './UpSvg.astro';
+import NotExpandedSvg from './NotExpandedSvg.astro';
 
 export interface Props {
     class?: string;
@@ -21,14 +21,14 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
         <MenuItem class:list={[menuItemClass]} class="menu-item" settings={settings} menuItemDefinition={menuItemDefinition} {...rest} />
     :
         <div class:list={['expandable-item', classNames]} {...rest}>
-            <div class="up-down-menu-item">
+            <div class="base">
                 <MenuItem class:list={[menuItemClass]} class="menu-item" settings={settings} menuItemDefinition={menuItemDefinition} {...rest} />
-                <div class="up-down-menu-item-click">
-                    <div class="down-subbed-menu-item-icon">
-                        <DownSvg width="1em" height="1em" />
+                <div class="expand-control">
+                    <div class="not-expanded-icon">
+                        <NotExpandedSvg width="1em" height="1em" />
                     </div>
-                    <div class="up-subbed-menu-item-icon">
-                        <UpSvg width="1em" height="1em" />
+                    <div class="expanded-icon">
+                        <ExpandedSvg width="1em" height="1em" />
                     </div>
                 </div>
             </div>
@@ -44,12 +44,14 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
 }
 
 <style lang="scss" define:vars={{
+    expandControlBackgroundColor: settings?.expandControlBackgroundColor,
+    notExpandedIconColor: settings?.notExpandedIconColor,
+    expandedIconColor: settings?.expandedIconColor,
     wideSubMenuBackgroundColor: settings?.wideSubMenuBackgroundColor,
     wideSubMenuBoxShadow: settings?.wideSubMenuBoxShadow,
     wideSubMenuMargin: settings?.wideSubMenuMargin,
     wideSubMenuPadding: settings?.wideSubMenuPadding,
     narrowMenuItemPadding: settings?.narrowMenuItemPadding,
-    upDownMenuItemClickBackgroundColor: settings?.upDownMenuItemClickBackgroundColor,
     narrowSubMenuFlexGap: settings?.narrowSubMenuFlexGap,
     narrowSubMenuMargin: settings?.narrowSubMenuMargin,
     narrowSubMenuPadding: settings?.narrowSubMenuPadding,
@@ -63,24 +65,26 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
         display: block;
         flex-direction: column;
 
-        > .up-down-menu-item {
+        > .base {
             display: flex;
             align-items: stretch;
 
-            > .up-down-menu-item-click {
+            > .expand-control {
                 display: flex;
                 align-items: center;
 
-                > .up-subbed-menu-item-icon {
+                > .expanded-icon {
                     display: none;
                     align-items: center;
                     width: 1em;
+                    color: var(--expandedIconColor, #586f8a);
                 }
 
-                > .down-subbed-menu-item-icon {
+                > .not-expanded-icon {
                     display: flex;
                     align-items: center;
                     width: 1em;
+                    color: var(--notExpandedIconColor, #586f8a);
                 }
             }
         }
@@ -100,8 +104,8 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
     /* Make sure lines up with below and @media in NavBar */
     @media screen and (hover: hover) and (width >= main-menu-config.$narrow-breakpoint) {
         .expandable-item {
-            > .up-down-menu-item {
-                > .up-down-menu-item-click {
+            > .base {
+                > .expand-control {
                     pointer-events: none;
                 }
             }
@@ -112,13 +116,13 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
                     display: flex;
                 }
 
-                > .up-down-menu-item {
-                    > .up-down-menu-item-click {
-                        > .up-subbed-menu-item-icon {
+                > .base {
+                    > .expand-control {
+                        > .expanded-icon {
                             display: flex;
                         }
 
-                        > .down-subbed-menu-item-icon {
+                        > .not-expanded-icon {
                             display: none;
                         }
                     }
@@ -132,17 +136,17 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
         .expandable-item {
             position: static;
 
-            > .up-down-menu-item {
+            > .base {
                 display: flex;
 
                 > .menu-item {
                     padding: var(--narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
                 }
 
-                > .up-down-menu-item-click {
+                > .expand-control {
                     flex: 1 1 auto;
                     padding-left: 0.2em;
-                    background-color: var(--upDownMenuItemClickBackgroundColor, #bcc3c8);
+                    background-color: var(--expandControlBackgroundColor, #bcc3c8);
                     cursor: pointer;
                 }
             }
@@ -164,13 +168,13 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
                     display: flex;
                 }
 
-                > .up-down-menu-item {
-                    > .up-down-menu-item-click {
-                        > .up-subbed-menu-item-icon {
+                > .base {
+                    > .expand-control {
+                        > .expanded-icon {
                             display: flex;
                         }
 
-                        > .down-subbed-menu-item-icon {
+                        > .not-expanded-icon {
                             display: none;
                         }
                     }

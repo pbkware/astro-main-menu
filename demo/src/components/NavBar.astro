@@ -1,7 +1,10 @@
 ---
-import { type HamburgerSettings, type MainMenuSettings, type MenuItemDefinition, DefaultSettings, Hamburger, MainMenu } from '@pbkware/astro-main-menu';
+import { type MainMenuSettings, type MenuItemDefinition, DefaultSettings, Hamburger, MainMenu } from '@pbkware/astro-main-menu';
+import GitHubIcon from './GitHubIcon.astro'
 
 export const navBackgroundColor = '#D6DAE0';
+
+const astroMainMenuGitHubRepositoryUrl = 'https://github.com/pbkware/astro-main-menu';
 
 const mainMenuSettings: MainMenuSettings = {
     wideMainMenuBackgroundColor: navBackgroundColor,
@@ -59,13 +62,13 @@ const menuItemDefinitions: MenuItemDefinition[] = [
 ---
 
 <nav class="navbar">
-    <div class="navbar-narrow-left">
-        <span>«</span>
-    </div>
+    <a href={astroMainMenuGitHubRepositoryUrl} class="navbar-narrow-left">
+        <GitHubIcon />
+    </a>
 
-    <div class="navbar-wide-left">
-        <span>«</span>
-    </div>
+    <a href={astroMainMenuGitHubRepositoryUrl} class="navbar-wide-left">
+        <GitHubIcon />
+    </a>
 
     <MainMenu settings={mainMenuSettings} menuItemDefinitions={menuItemDefinitions} />
 
@@ -101,12 +104,14 @@ const menuItemDefinitions: MenuItemDefinition[] = [
         }
 
         > .navbar-narrow-left {
-            width: var(--hamburgerWidth, 1.8em);
             display: none;
+            color: black;
+            width: var(--hamburgerWidth, 1.8em);
         }
 
         > .navbar-wide-left {
             display: flex;
+            color: black;
             align-items: center;
             flex: 0 0 auto;
         }

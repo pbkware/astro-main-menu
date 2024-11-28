@@ -40,14 +40,14 @@ export class MenuClickProcessor {
 
                 const expandableItemElementList = mainMenuComponent.querySelectorAll('.expandable-item');
                 expandableItemElementList.forEach((element) => {
-                    const upDownMenuItemClickElement = element.querySelector('.up-down-menu-item-click');
-                    if (upDownMenuItemClickElement === null) {
-                        throw new Error(`UpDownMenuItemClick element for "${element.innerHTML}" not found`);
+                    const expandControlElement = element.querySelector('.expand-control');
+                    if (expandControlElement === null) {
+                        throw new Error(`expand-control element for "${element.innerHTML}" not found`);
                     } else {
                         this._expandableItemElements.push(element);
                         element.classList.remove(MenuClickProcessor.expandableItemExpandedClassName);
 
-                        upDownMenuItemClickElement.addEventListener('click', () => {
+                        expandControlElement.addEventListener('click', () => {
 
                             if (this._expandedExpandableItemElement === undefined) {
                                 this._expandedExpandableItemElement = element;

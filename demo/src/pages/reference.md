@@ -62,8 +62,12 @@ export interface MainMenuSettings {
 
     // ExpandableItem
 
-    /** background-color applied to UpDownMenuItemClick element within ExpandableItem. @defaultValue #bcc3c8 */
-    upDownMenuItemClickBackgroundColor?: string;
+    /** background-color applied to expand-control element within ExpandableItem. @defaultValue #bcc3c8 */
+    expandControlBackgroundColor?: string;
+    /** color applied to the not expanded Icon expand-control element within ExpandableItem. @defaultValue #bcc3c8 */
+    notExpandedIconColor?: string;
+    /** color applied to the expanded Icon expand-control element within ExpandableItem. @defaultValue #bcc3c8 */
+    expandedIconColor?: string;
     /** background-color applied to SubMenu within ExpandableItem when wide. @defaultValue #d0dae0 */
     wideSubMenuBackgroundColor?: string;
     /** box-shadow applied to SubMenu within ExpandableItem when wide. @defaultValue 0.14em 0.14em 0.14em #2f3340 */
