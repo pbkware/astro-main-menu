@@ -1,10 +1,9 @@
 ---
 import { type MainMenuSettings, type MenuItemDefinition, DefaultSettings, Hamburger, MainMenu } from '@pbkware/astro-main-menu';
-import GitHubIcon from './GitHubIcon.astro'
+import GitHubSvg from './GitHubSvg.astro'
+import { astroMainMenuGitHubRepositoryUrl } from '../common/types-and-consts';
 
 export const navBackgroundColor = '#D6DAE0';
-
-const astroMainMenuGitHubRepositoryUrl = 'https://github.com/pbkware/astro-main-menu';
 
 const mainMenuSettings: MainMenuSettings = {
     wideMainMenuBackgroundColor: navBackgroundColor,
@@ -63,11 +62,11 @@ const menuItemDefinitions: MenuItemDefinition[] = [
 
 <nav class="navbar">
     <a href={astroMainMenuGitHubRepositoryUrl} class="navbar-narrow-left">
-        <GitHubIcon />
+        <GitHubSvg />
     </a>
 
     <a href={astroMainMenuGitHubRepositoryUrl} class="navbar-wide-left">
-        <GitHubIcon />
+        <GitHubSvg />
     </a>
 
     <MainMenu settings={mainMenuSettings} menuItemDefinitions={menuItemDefinitions} />
@@ -78,7 +77,6 @@ const menuItemDefinitions: MenuItemDefinition[] = [
 
     <div class="navbar-wide-right">
         <div class="navbar-wide-right-icon">
-            <span>»</span>
         </div>
         <Hamburger />
     </div>
