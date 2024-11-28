@@ -5,6 +5,9 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
+    site: 'https://pbkware.github.io',
+    base: '/astro-main-menu/', // make sure has trailing slash
+
     integrations: [
         mdx(),
     ],

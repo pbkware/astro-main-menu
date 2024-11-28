@@ -10,36 +10,38 @@ const mainMenuSettings: MainMenuSettings = {
     wideSubMenuBackgroundColor: navBackgroundColor,
 }
 
+const base = import.meta.env.BASE_URL;
+
 const menuItemDefinitions: MenuItemDefinition[] = [
     {
         text: 'Start',
-        url: '/',
+        url: base,
         children: [
             {
                 text: 'Home',
-                url: '/',
+                url: base,
             },
             {
                 text: 'Installation',
-                url: '/start/installation',
+                url: `${base}start/installation`,
             },
             {
                 text: 'Quick',
-                url: '/start/quick',
+                url: `${base}start/quick`,
             },
             {
                 text: 'Using',
-                url: '/start/using',
+                url: `${base}start/using`,
             },
         ]
     },
     {
         text: 'Reference',
-        url: '/reference',
+        url: `${base}reference`,
     },
     {
         text: 'Other',
-        url: '/other',
+        url: `${base}other`,
         children: [
             {
                 text: 'Run JavaScript',
@@ -49,13 +51,13 @@ const menuItemDefinitions: MenuItemDefinition[] = [
             },
             {
                 text: 'Why SASS',
-                url: '/other/why-sass',
+                url: `${base}other/why-sass`,
             },
         ]
     },
     {
         text: 'About',
-        url: '/about',
+        url: `${base}about`,
     },
 ];
 ---
