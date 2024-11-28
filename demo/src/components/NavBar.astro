@@ -154,7 +154,7 @@ const menuItemDefinitions: MenuItemDefinition[] = [
     const processor = MenuClickProcessor.get(); // This always needs to be called however only need processor if want to handle dataClick event
 
     // Handle dataClick event.  
-    processor.dataClickEventer = (element, id, data, url) => {
+    processor.dataClickEventer = (_element, id, data, _url) => {
         if (id === 'alert') {
             setTimeout(() => alert(data), 0);
             return true; // Indicate event was handled.
