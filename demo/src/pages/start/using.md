@@ -115,7 +115,7 @@ const navBackgroundColor = '#D6DAE0';
 
 ## Menu Items
 
-The menu items in a main menu are specified by an array of [MenuItemDefinition](../reference#menuitemdefinition)s.  This array is assigned to the ```MainMenu``` component's ```menuItemDefinitions``` attribute.
+The menu items in a main menu are specified by an array of [MenuItemDefinition](../../reference/#menuitemdefinition)s.  This array is assigned to the ```MainMenu``` component's ```menuItemDefinitions``` attribute.
 
 Menu items can have child menu items using the definition's ```children``` property but there can only be one level of children.  That is, only top level menu item definitions can have children; they cannot have grand children.
 
@@ -197,13 +197,13 @@ Client side, it is necessary to process clicks on menu items.  To do this, inclu
 </script>
 ```
 
-The [MenuClickProcessor](../reference#menuclickprocessor) singleton instance will automatically handle navigation to the ```url``` specified in the [MenuItemDefinition](../reference#menuitemdefinition) of the clicked menu item.  However it is possible to customise the behaviour of a click event.
+The [MenuClickProcessor](../../reference/#menuclickprocessor) singleton instance will automatically handle navigation to the ```url``` specified in the [MenuItemDefinition](../../reference/#menuitemdefinition) of the clicked menu item.  However it is possible to customise the behaviour of a click event.
 
 To handle a click event differently, assign an event handler closure/function to the ```dataClickEventer``` property of the gotten processor.  This handler can have up to 4 parameters:
 1. **element: HTMLElement** - The HTML element which generated the click event.
 1. **id: string | undefined** - If defined, can be used to easily identify which menu item was clicked.
-1. **data: string | undefined** - Contains the data specified in the corresponding [MenuItemDefinition](../reference#menuitemdefinition).
-1. **url: string | undefined** - Contains the URL specified in the corresponding [MenuItemDefinition](../reference#menuitemdefinition).
+1. **data: string | undefined** - Contains the data specified in the corresponding [MenuItemDefinition](../../reference/#menuitemdefinition).
+1. **url: string | undefined** - Contains the URL specified in the corresponding [MenuItemDefinition](../../reference/#menuitemdefinition).
 
 The event handler should return a boolean indicating whether it handled the click event:
 * **false** - The event was not handled and the processor should navigate to the page specified by the URL specified in the corresponding MenuItemDefinition.
@@ -225,6 +225,24 @@ The event handler should return a boolean indicating whether it handled the clic
   }
 </script>
 ```
+
+You can use [MenuClickProcessor](../../reference/#menuclickprocessor) to deactivate a main menu when displayed in narrow mode using its `deactivateNarrow()` method.  This can be used to remove a main menu when the user clicks outside the menu.  However it is first necessary to see that the click event has not bubbled up from the Hamburger or Main Menu elements.  The `isClickHandledEventTarget()` can be used to check this.
+
+```ts
+<script>
+    import { MenuClickProcessor } from '@pbkware/astro-main-menu';
+    const processor = MenuClickProcessor.get(); // This always needs to be called however only need processor if want to handle dataClick event
+
+    // Hide narrow menu and hamburger if document is clicked outside menu
+    document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target === null || !processor.isClickHandledEventTarget(target)) {
+            processor.deactivateNarrow();
+        }
+    });
+</script>
+```
+
 ## Wide/Narrow breakpoint
 
 MainMenu (and Hamburger) is displayed differently on wide and narrow devices.  In wide devices (eg desktops), MainMenu is displayed with top level menu items in a horizontal bar.  In narrow devices (eg. mobiles), it is displayed with top level menu items in a vertical bar and do not respond to hover.  Note that if a device does not support hover, then MainMenu is displayed in the same way as on a narrow device.
@@ -239,7 +257,7 @@ The following @media query is used to determine whether MainMenu and Hamburger a
 
 This @media query is used in several places within MainMenu and Hamburger.  It can also be used when implementing custom styling.
 
-The width below which narrow display is used, is specified in the $narrow-breakpoint SCSS variable within the ```_main-menu-config.scss``` ([see installation](./installation#add-_main-menu-configscss-file)). This width should be wider than both the width of MainMenu bar when displayed wide and the width of general mobile devices (but not necessarily tablet devices).  It is preferable to specify the width in units of ```rem```.  (Note that it is not possible to use ```em``` units in @media queries).
+The width below which narrow display is used, is specified in the $narrow-breakpoint SCSS variable within the ```_main-menu-config.scss``` ([see installation](../installation/#add-_main-menu-configscss-file)). This width should be wider than both the width of MainMenu bar when displayed wide and the width of general mobile devices (but not necessarily tablet devices).  It is preferable to specify the width in units of ```rem```.  (Note that it is not possible to use ```em``` units in @media queries).
 
 ## Styling
 
@@ -251,7 +269,7 @@ The MainMenu and Hamburger components can be styled using either their:
 
 This is the easy way of styling the MainMenu and Hamburger components as you do not have to understand the HTML and CSS used internally within these components.  You also do not have to use the @media query to distinguish between wide and narrow.
 
-Both the MainMenu and Hamburger components have a ```settings``` attribute.  These can optionally be supplied with a settings object; respectively of type [```MainMenuSettings```](../reference#mainmenusettings) and [```HamburgerSettings```](../reference#hamburgersettings).
+Both the MainMenu and Hamburger components have a ```settings``` attribute.  These can optionally be supplied with a settings object; respectively of type [```MainMenuSettings```](../../reference/#mainmenusettings) and [```HamburgerSettings```](../../reference/#hamburgersettings).
 
 All of the properties in these settings object are optional.  If a property is not defined, its respective CSS uses its default value.  If the settings object is not supplied, all the relevant CSS use the default values.  The ```DefaultSettings``` namespace exports setting objects with the default values:
 

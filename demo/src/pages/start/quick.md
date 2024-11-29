@@ -27,7 +27,7 @@ npm create astro@latest
 
 ## Step 2: Install Astro Main Menu
 
-Change directory into the folder created for the new Astro project and follow the [installation instructions](./installation).
+Change directory into the folder created for the new Astro project and follow the [installation instructions](../installation/).
 
 ## Step 3: Configure wide/narrow breakpoint
 

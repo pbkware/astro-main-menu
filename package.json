@@ -1,7 +1,7 @@
 {
   "name": "astro-main-menu-project",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.9.2",
   "type": "module",
   "scripts": {
     "build": "npm --filter astro-main-menu --filter www run build",
@@ -16,9 +16,9 @@
   "keywords": [],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pbkware/astro-main-menu.gitissues"
+    "url": "https://github.com/pbkware/astro-main-menu/issues"
   },
-  "homepage": "https://github.com/pbkware/astro-main-menu.git#readme",
+  "homepage": "https://github.com/pbkware/astro-main-menu#readme",
   "workspaces": [
     "demo",
     "packages/publish"

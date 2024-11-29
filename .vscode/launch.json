@@ -12,7 +12,7 @@
 			"type": "chrome",
 			"request": "launch",
 			"name": "Launch Chrome against localhost",
-			"url": "http://localhost:4321",
+			"url": "http://localhost:4321/astro-main-menu/",
 			"webRoot": "${workspaceFolder}/src",
 			"sourceMapPathOverrides": {
 				"vite:///src/*": "${webRoot}/*"

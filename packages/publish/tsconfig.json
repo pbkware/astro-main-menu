@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src", "typings/virtual.d.ts"],
+  "include": ["src", "virtual/virtual.d.ts"],
   "compilerOptions": {
     "allowJs": true,
     "module": "ES2022",
@@ -9,7 +9,7 @@
     "jsx": "preserve",
     "baseUrl": "./",
     "moduleResolution": "bundler",
-    "declarationDir": "typings",
+    "declarationDir": "ts-types",
   },
   // NEW: Options for file/directory watching
   "watchOptions": {

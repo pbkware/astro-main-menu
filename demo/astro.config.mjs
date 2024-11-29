@@ -7,6 +7,7 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
     site: 'https://pbkware.github.io',
     base: '/astro-main-menu/', // make sure has trailing slash
+    trailingSlash: 'always',
 
     integrations: [
         mdx(),

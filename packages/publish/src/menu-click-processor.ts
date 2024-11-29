@@ -9,32 +9,34 @@ declare global {
 
 /** Processes menu item clicks.  Only access this class via MenuClickProcessor.get() as only a single instance can exist (singleton) */
 export class MenuClickProcessor {
+    /** MainMenu component root element */
+    readonly mainMenuElement: Element;
+    /** Hamburger component root element. Click events is used to activate and deactive main menu */
+    readonly hamburgerElement: Element;
+
     /** Assign a handler to customise the behaviour of click events */
     dataClickEventer: MenuClickProcessor.DataClickEventer | undefined;
 
-    private readonly _hamburgerIcon: Element;
-    private readonly _mainMenuComponent: Element;
-    private readonly _expandableItemElements = new Array<Element>();
+    private readonly _expandControlElements = new Array<Element>();
     private _expandedExpandableItemElement: Element | undefined;
 
-
     constructor() {
-        const hamburgerIcon = document.querySelector('.hamburger');
-        if (hamburgerIcon === null) {
+        const hamburgerElement = document.querySelector('.hamburger');
+        if (hamburgerElement === null) {
             throw new Error('Hamburger Icon not found');
         } else {
-            this._hamburgerIcon = hamburgerIcon;
+            this.hamburgerElement = hamburgerElement;
             const mainMenuComponent = document.querySelector('.main-menu');
             if (mainMenuComponent === null) {
                 throw new Error('MainMenu Component not found');
             } else {
-                this._mainMenuComponent = mainMenuComponent;
-                hamburgerIcon.classList.remove(MenuClickProcessor.hamburgerActiveClassName);
+                this.mainMenuElement = mainMenuComponent;
+                hamburgerElement.classList.remove(MenuClickProcessor.hamburgerActiveClassName);
                 mainMenuComponent.classList.remove(MenuClickProcessor.mainMenuDisplayedClassName);
 
-                hamburgerIcon.addEventListener('click', () => {
+                hamburgerElement.addEventListener('click', () => {
                     this.ensureNotExpanded();
-                    hamburgerIcon.classList.toggle(MenuClickProcessor.hamburgerActiveClassName);
+                    hamburgerElement.classList.toggle(MenuClickProcessor.hamburgerActiveClassName);
                     mainMenuComponent.classList.toggle(MenuClickProcessor.mainMenuDisplayedClassName);
                 });
 
@@ -44,9 +46,9 @@ export class MenuClickProcessor {
                     if (expandControlElement === null) {
                         throw new Error(`expand-control element for "${element.innerHTML}" not found`);
                     } else {
-                        this._expandableItemElements.push(element);
                         element.classList.remove(MenuClickProcessor.expandableItemExpandedClassName);
 
+                        this._expandControlElements.push(expandControlElement);
                         expandControlElement.addEventListener('click', () => {
 
                             if (this._expandedExpandableItemElement === undefined) {
@@ -93,6 +95,43 @@ export class MenuClickProcessor {
         }
     }
 
+    /** Returns true if MenuClickProcessor handles the elements click event.  This includes root hamburger element and expand-control elements and their children nodes */
+    isClickHandledEventTarget(eventTarget: EventTarget) {
+        if (eventTarget === this.hamburgerElement) {
+            return true;
+        } else {
+            // Need to check if eventTarget is .expandable-item HTML element or a child.
+            // However eventTarget may be a SVG or even a SVG path.
+            if (!(eventTarget instanceof Node)) {
+                return false; // Can't do anything if not Node
+            } else {
+                // Find first parent that is an Element
+                let eventNode = eventTarget;
+                while (!(eventNode instanceof Element)) {
+                    const parentNode = eventNode.parentNode;
+                    if (parentNode === null) {
+                        return false;
+                    } else {
+                        eventNode = parentNode;
+                    }
+                }
+
+                // Check if element is or is below an expandable-item HTMLElement
+                const expandableItemElement = eventNode.closest('.main-menu > .expandable-item');
+                return expandableItemElement !== null;
+            }
+        }
+    }
+
+    /** Undisplays the Main Menu and deactivates the Hamburger if the Hamburger is active */
+    deactivateNarrow() {
+        if (this.hamburgerElement.classList.contains(MenuClickProcessor.hamburgerActiveClassName)) {
+            this.ensureNotExpanded();
+            this.hamburgerElement.classList.remove(MenuClickProcessor.hamburgerActiveClassName);
+            this.mainMenuElement.classList.remove(MenuClickProcessor.mainMenuDisplayedClassName);
+        }
+    }
+
     private async awaitNavigate(url: string, options: Options) {
         await navigate(url, options); // I don't think this ever returns.  So following lines are probably superfluous
         this.deactivateNarrow();
@@ -104,12 +143,6 @@ export class MenuClickProcessor {
             this._expandedExpandableItemElement.classList.remove(MenuClickProcessor.expandableItemExpandedClassName);
             this._expandedExpandableItemElement = undefined;
         }
-    }
-
-    private deactivateNarrow() {
-        this.ensureNotExpanded();
-        this._hamburgerIcon.classList.remove(MenuClickProcessor.hamburgerActiveClassName);
-        this._mainMenuComponent.classList.remove(MenuClickProcessor.mainMenuDisplayedClassName);
     }
 }
 

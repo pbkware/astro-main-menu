@@ -23,25 +23,25 @@ const menuItemDefinitions: MenuItemDefinition[] = [
             },
             {
                 text: 'Installation',
-                url: `${base}start/installation`,
+                url: `${base}start/installation/`,
             },
             {
                 text: 'Quick',
-                url: `${base}start/quick`,
+                url: `${base}start/quick/`,
             },
             {
                 text: 'Using',
-                url: `${base}start/using`,
+                url: `${base}start/using/`,
             },
         ]
     },
     {
         text: 'Reference',
-        url: `${base}reference`,
+        url: `${base}reference/`,
     },
     {
         text: 'Other',
-        url: `${base}other`,
+        url: `${base}other/`,
         children: [
             {
                 text: 'Run JavaScript',
@@ -51,13 +51,13 @@ const menuItemDefinitions: MenuItemDefinition[] = [
             },
             {
                 text: 'Why SASS',
-                url: `${base}other/why-sass`,
+                url: `${base}other/why-sass/`,
             },
         ]
     },
     {
         text: 'About',
-        url: `${base}about`,
+        url: `${base}about/`,
     },
 ];
 ---
@@ -154,7 +154,6 @@ const menuItemDefinitions: MenuItemDefinition[] = [
     const processor = MenuClickProcessor.get(); // This always needs to be called however only need processor if want to handle dataClick event
 
     // Handle dataClick event.  
-    // Need to work out why parameter types are not inferred
     processor.dataClickEventer = (_element, id, data) => {
         if (id === 'alert') {
             setTimeout(() => alert(data), 0);
@@ -163,4 +162,12 @@ const menuItemDefinitions: MenuItemDefinition[] = [
             return false; // Indicate event not handled.  processor will then try and navigate to URL
         }
     }
+
+    // Hide narrow menu and hamburger if document is clicked outside menu
+    document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target === null || !processor.isClickHandledEventTarget(target)) {
+            processor.deactivateNarrow();
+        }
+    });
 </script>

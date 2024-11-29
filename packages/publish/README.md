@@ -15,7 +15,8 @@ npm install @pbkware/astro-main-menu
 * Menu Item can also run JavaScript or TypeScript code (instead of navigating).
 * Separate MainMenu and Hamburger components to provide flexibility in setting up navigation UI.
 
-## Demo
+## Demo and More information
+[https://pbkware.klink.au/astro-main-menu/](https://pbkware.klink.au/astro-main-menu/)
 
 ## Sponsored by
 [Xilytix](https://xilytix.com)
