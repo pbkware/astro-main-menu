@@ -9,6 +9,7 @@
     "jsx": "preserve",
     "baseUrl": "./",
     "moduleResolution": "bundler",
+    "declarationDir": "typings",
   },
   // NEW: Options for file/directory watching
   "watchOptions": {
