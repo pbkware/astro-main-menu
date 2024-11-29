@@ -155,7 +155,7 @@ const menuItemDefinitions: MenuItemDefinition[] = [
 
     // Handle dataClick event.  
     // Need to work out why parameter types are not inferred
-    processor.dataClickEventer = (_element: HTMLElement, id: string | undefined, data: string | undefined) => {
+    processor.dataClickEventer = (_element, id, data) => {
         if (id === 'alert') {
             setTimeout(() => alert(data), 0);
             return true; // Indicate event was handled.

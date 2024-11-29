@@ -1,6 +1,6 @@
 # build output
 dist/
-ts-out/
+
 # generated types
 .astro/
 
