@@ -36,7 +36,7 @@
   "bugs": {
     "url": "https://github.com/pbkware/astro-main-menu/issues"
   },
-  "homepage": "https://github.com/pbkware/astro-main-menu#readme",
+  "homepage": "https://pbkware.klink.au/astro-main-menu/",
   "dependencies": {
     "astro": "^4.16.15"
   },

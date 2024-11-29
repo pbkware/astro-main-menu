@@ -1,6 +1,6 @@
 ---
 import NavBar from '../components/NavBar.astro';
-const narrowHeading = 'Astro Main Menu Demo'
+const title = 'Astro Main Menu Demo'
 
 const { frontmatter } = Astro.props;
 
@@ -12,12 +12,12 @@ const pageTitle = frontmatter.title;
         <meta charset="utf-8" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width" />
-        <title>Astro Main Menu Demo</title>
+        <title>{title}</title>
     </head>
 
     <body>
         <NavBar>
-            <span class="narrow-heading" slot="narrow-heading">{narrowHeading}</span>
+            <span class="narrow-heading" slot="narrow-heading">{title}</span>
         </NavBar>
 
         <div id="titleAndContent">
