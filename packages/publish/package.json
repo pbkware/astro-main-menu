@@ -1,6 +1,7 @@
 {
   "name": "@pbkware/astro-main-menu",
-  "version": "0.0.3",
+  "description": "Responsive Main Menu and Hamburger components for Astro",
+  "version": "0.9.1",
   "type": "module",
   "types": "./index.d.ts",
   "exports": {
@@ -24,6 +25,7 @@
     "url": "https://paul.klink.au"
   },
   "keywords": [
+    "astro-component",
     "menu",
     "navigate"
   ],
