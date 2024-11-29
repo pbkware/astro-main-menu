@@ -1,3 +1,5 @@
+# Astro Main Menu
+
 Responsive Main Menu and Hamburger components for [Astro](https://astro.build)
 
 ## Install
@@ -14,6 +16,7 @@ npm install @pbkware/astro-main-menu
 * Flexible formatting of menu CSS with access to scoped classes within menu HTML.
 * Menu Item can also run JavaScript or TypeScript code (instead of navigating).
 * Separate MainMenu and Hamburger components to provide flexibility in setting up navigation UI.
+* Supports deactivating main menu when document is clicked outside of menu.
 
 ## Demo and More information
 [https://pbkware.klink.au/astro-main-menu/](https://pbkware.klink.au/astro-main-menu/)
