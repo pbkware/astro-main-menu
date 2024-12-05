@@ -46,6 +46,8 @@ This file is required to specify the @media breakpoint between wide and narrow. 
 
 ### Optionally modify Vite config
 
+Not required in Astro 5 or later.
+
 If you get a Dart Sass deprecation warning when building your project with Astro, modify ```astro.config.mjs``` with the [addition](https://vite.dev/config/shared-options#css-preprocessoroptions) of a ```vite``` property in the object passed to ```defineConfig()``` as shown below:
 
 ```js

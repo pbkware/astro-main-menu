@@ -18,6 +18,10 @@ npm install @pbkware/astro-main-menu
 * Separate MainMenu and Hamburger components to provide flexibility in setting up navigation UI.
 * Supports deactivating main menu when document is clicked outside of menu.
 
+## Astro Version
+* **1.0.0** - built with Astro 5
+* **0.9.2** - built with Astro 4
+
 ## Demo and More information
 [https://pbkware.klink.au/astro-main-menu/](https://pbkware.klink.au/astro-main-menu/)
 

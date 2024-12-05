@@ -4,6 +4,10 @@ const title = 'Astro Main Menu Demo'
 
 const { frontmatter } = Astro.props;
 
+export const canonicalHost = 'pbkware.klink.au'; // Defined in Astro Config. In future get this from environmental variable
+export const canonicalSite = `https://${canonicalHost}/`;
+const canonicalURl = new URL(Astro.url.pathname, canonicalSite);
+
 const pageTitle = frontmatter.title;
 ---
 
@@ -11,6 +15,8 @@ const pageTitle = frontmatter.title;
     <head>
         <meta charset="utf-8" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="canonical" href={canonicalURl} />
+        <link rel="sitemap" href="/sitemap-index.xml" />
         <meta name="viewport" content="width=device-width" />
         <title>{title}</title>
     </head>
@@ -46,15 +52,42 @@ const pageTitle = frontmatter.title;
         line-height: 1.5;
 
         /* Table */
-        table,
-        th,
-        td {
-            border: 1px solid darkslategrey;
+        table {
+            display: block;
+            overflow-x: auto;
             border-collapse: collapse;
+
+            th,
+            td {
+                border: 1px solid darkslategrey;
+                padding: .3em;
+            }
         }
 
-        th, td {
-            padding: .3em;
+        /* Lists */
+        @media screen and (width > 331px) and (width < 430px) {
+            ul {
+                padding-left: 1em;
+            }
+
+            li > p {
+                display: inline;
+            }
+        }
+
+        /* Lists */
+        @media screen and (width <= 330px) {
+            li {
+                list-style-position: inside;
+            }
+
+            ul {
+                padding-left: 0;
+            }
+
+            li > p {
+                display: inline;
+            }
         }
     }
 

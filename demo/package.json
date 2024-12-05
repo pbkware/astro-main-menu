@@ -2,7 +2,7 @@
   "name": "demo",
   "type": "module",
   "private": true,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -12,9 +12,10 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/mdx": "^3.1.9",
-    "@pbkware/astro-main-menu": "^0.9.2",
-    "astro": "^4.16.15",
+    "@astrojs/mdx": "^4.0.1",
+    "@astrojs/sitemap": "^3.2.1",
+    "@pbkware/astro-main-menu": "^1.0.0",
+    "astro": "^5.0.2",
     "sass": "^1.81.0",
     "typescript": "^5.6.3"
   }
