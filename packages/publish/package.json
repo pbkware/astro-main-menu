@@ -40,7 +40,7 @@
   },
   "homepage": "https://pbkware.klink.au/astro-main-menu/",
   "dependencies": {
-    "astro": "^5.0.2"
+    "astro": "^5.0.8"
   },
   "devDependencies": {
     "typescript": "^5.0.4",
