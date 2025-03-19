@@ -1,7 +1,7 @@
 {
   "name": "@pbkware/astro-main-menu",
   "description": "Responsive Main Menu and Hamburger components for Astro",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "types": "./index.d.ts",
   "exports": {

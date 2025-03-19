@@ -1,5 +1,7 @@
 # Astro Main Menu
 
+[![NPM version](https://img.shields.io/npm/v/@pbkware/astro-main-menu)](https://www.npmjs.com/package/@pbkware/astro-main-menu) [![License](https://img.shields.io/github/license/pbkware/astro-main-menu)](https://github.com/pbkware/astro-main-menu?tab=MIT-1-ov-file#readme)
+
 Responsive Main Menu and Hamburger components for [Astro](https://astro.build)
 
 ## Install
@@ -18,7 +20,8 @@ npm install @pbkware/astro-main-menu
 * Separate MainMenu and Hamburger components to provide flexibility in setting up navigation UI.
 * Supports deactivating main menu when document is clicked outside of menu.
 
-## Astro Version
+## Releases
+* **2.0.0** - Changed CSS custom property names (refer to Styling in Using documentation)
 * **1.0.0** - built with Astro 5
 * **0.9.2** - built with Astro 4
 
