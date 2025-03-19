@@ -26,29 +26,29 @@ const { class: className, settings, menuItemDefinition, ...rest } = Astro.props;
 
 
 <style lang="scss" define:vars={{
-    menuItemTextDecoration: settings?.menuItemTextDecoration,
-    menuItemColor: settings?.menuItemColor,
-    menuItemMargin: settings?.menuItemMargin,
-    menuItemPadding: settings?.menuItemPadding,
-    menuItemHoverBackgroundColor: settings?.menuItemHoverBackgroundColor,
+    "amm-menuItemTextDecoration": settings?.menuItemTextDecoration,
+    "amm-menuItemColor": settings?.menuItemColor,
+    "amm-menuItemMargin": settings?.menuItemMargin,
+    "amm-menuItemPadding": settings?.menuItemPadding,
+    "amm-menuItemHoverBackgroundColor": settings?.menuItemHoverBackgroundColor,
 }}>
     @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
     .menu-item {
-        color: var(--menuItemColor, #021426);
+        color: var(--amm-menuItemColor, #021426);
         display: block;
-        margin: var(--menuItemMargin, 0);
-        padding: var(--menuItemPadding, 0);
+        margin: var(--amm-menuItemMargin, 0);
+        padding: var(--amm-menuItemPadding, 0);
         white-space: nowrap;
-        text-decoration: var(--menuItemTextDecoration, none);
+        text-decoration: var(--amm-menuItemTextDecoration, none);
         cursor: pointer;
 
         &:hover {
-            background-color: var(--menuItemHoverBackgroundColor, #97c7e7);
+            background-color: var(--amm-menuItemHoverBackgroundColor, #97c7e7);
         }
 
         @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
-            padding: var(--narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
+            padding: var(--amm-narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
         }
     }
 </style>

@@ -28,32 +28,32 @@ const { class: classNames, expandableItemClass, menuItemClass, settings, menuIte
 </menu>
 
 <style lang="scss" define:vars={{
-    mainMenuFontFamily: settings?.mainMenuFontFamily,
-    wideMainMenuFontSize: settings?.wideMainMenuFontSize,
-    wideMainMenuBackgroundColor: settings?.wideMainMenuBackgroundColor,
-    narrowMainMenuFontSize: settings?.narrowMainMenuFontSize,
-    narrowMainMenuBackgroundColor: settings?.narrowMainMenuBackgroundColor,
-    narrowMainMenuMaxWidth: settings?.narrowMainMenuMaxWidth,
-    mainMenuMargin: settings?.mainMenuMargin,
-    mainMenuPadding: settings?.mainMenuPadding,
-    wideMainMenuFlexGap: settings?.wideMainMenuFlexGap,
-    narrowMainMenuTop: settings?.narrowMainMenuTop,
-    narrowMainMenuLeft: settings?.narrowMainMenuLeft,
-    narrowMainMenuRight: settings?.narrowMainMenuRight,
-    narrowMainMenuFlexGap: settings?.narrowMainMenuFlexGap,
-    narrowMainMenuBoxShadow: settings?.narrowMainMenuBoxShadow,
-    narrowMenuItemPadding: settings?.narrowMenuItemPadding,
+    "amm-mainMenuFontFamily": settings?.mainMenuFontFamily,
+    "amm-wideMainMenuFontSize": settings?.wideMainMenuFontSize,
+    "amm-wideMainMenuBackgroundColor": settings?.wideMainMenuBackgroundColor,
+    "amm-narrowMainMenuFontSize": settings?.narrowMainMenuFontSize,
+    "amm-narrowMainMenuBackgroundColor": settings?.narrowMainMenuBackgroundColor,
+    "amm-narrowMainMenuMaxWidth": settings?.narrowMainMenuMaxWidth,
+    "amm-mainMenuMargin": settings?.mainMenuMargin,
+    "amm-mainMenuPadding": settings?.mainMenuPadding,
+    "amm-wideMainMenuFlexGap": settings?.wideMainMenuFlexGap,
+    "amm-narrowMainMenuTop": settings?.narrowMainMenuTop,
+    "amm-narrowMainMenuLeft": settings?.narrowMainMenuLeft,
+    "amm-narrowMainMenuRight": settings?.narrowMainMenuRight,
+    "amm-narrowMainMenuFlexGap": settings?.narrowMainMenuFlexGap,
+    "amm-narrowMainMenuBoxShadow": settings?.narrowMainMenuBoxShadow,
+    "amm-narrowMenuItemPadding": settings?.narrowMenuItemPadding,
 }}>
     @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
     .main-menu {
         display: flex;
-        font-family: var(--mainMenuFontFamily, inherit);
-        font-size: var(--wideMainMenuFontSize, 1.2em);
-        background-color: var(--wideMainMenuBackgroundColor, inherit);
-        margin: var(--mainMenuMargin, 0);
-        padding: var(--mainMenuPadding, 0);
-        gap: var(--wideMainMenuFlexGap, .8em);
+        font-family: var(--amm-mainMenuFontFamily, inherit);
+        font-size: var(--amm-wideMainMenuFontSize, 1.2em);
+        background-color: var(--amm-wideMainMenuBackgroundColor, inherit);
+        margin: var(--amm-mainMenuMargin, 0);
+        padding: var(--amm-mainMenuPadding, 0);
+        gap: var(--amm-wideMainMenuFlexGap, .8em);
 
         @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
             display: none;
@@ -63,14 +63,14 @@ const { class: classNames, expandableItemClass, menuItemClass, settings, menuIte
                 width: 100%;
                 position: absolute;
                 flex-direction: column;
-                background-color: var(--narrowMainMenuBackgroundColor, #cddee8);
-                top: var(--narrowMainMenuTop, 0);
-                left: var(--narrowMainMenuLeft);
-                right: var(--narrowMainMenuRight, 0);
-                font-size: var(--narrowMainMenuFontSize, 1.8rem);
-                gap: var(--narrowMainMenuFlexGap, 0.18rem);
-                max-width: var(--narrowMainMenuMaxWidth, 15em);
-                box-shadow: var(--narrowMainMenuBoxShadow, 0 .1rem .4rem black);
+                background-color: var(--amm-narrowMainMenuBackgroundColor, #cddee8);
+                top: var(--amm-narrowMainMenuTop, 0);
+                left: var(--amm-narrowMainMenuLeft);
+                right: var(--amm-narrowMainMenuRight, 0);
+                font-size: var(--amm-narrowMainMenuFontSize, 1.8rem);
+                gap: var(--amm-narrowMainMenuFlexGap, 0.18rem);
+                max-width: var(--amm-narrowMainMenuMaxWidth, 15em);
+                box-shadow: var(--amm-narrowMainMenuBoxShadow, 0 .1rem .4rem black);
             }
         }
     }

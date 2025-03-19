@@ -263,6 +263,7 @@ The width below which narrow display is used, is specified in the $narrow-breakp
 
 The MainMenu and Hamburger components can be styled using either their:
 * [**```settings``` attribute**](#styling-using-settings-attribute) (the easy way)
+* [**CSS custom properties**](#styling-using-css-custom-properties) (the CSS way)
 * [**class attributes**](#styling-using-class-attributes) (the more powerful way)
 
 ### Styling using settings attribute
@@ -311,6 +312,16 @@ const hamburgerSettings: HamburgerSettings = {
   <Hamburger settings={hamburgerSettings} />
 </nav>
 ```
+
+Note that internally, these settings will generate custom CSS properties (CSS variables) on the corresponding internal HTML elements. See next section for more details.
+
+### Styling using CSS custom properties
+
+You can set the MainMenu and Hamburger settings using CSS custom properties.
+
+The name of the custom property for MainMenu settings is: `amm-<setting name>` (eg. `amm-wideMainMenuBackgroundColor`).  For Hamburger settings, the custom property name is: `amm-hamburger<Setting name>` with the first letter of the setting name capitalised (eg. `amm-hamburgerWidth`).
+
+Note that if a setting is specified with both a CSS custom property and a settings attribute, the value from the settings attribute will be used.
 
 ### Styling using class attributes
 

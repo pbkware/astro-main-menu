@@ -44,19 +44,19 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
 }
 
 <style lang="scss" define:vars={{
-    expandControlBackgroundColor: settings?.expandControlBackgroundColor,
-    notExpandedIconColor: settings?.notExpandedIconColor,
-    expandedIconColor: settings?.expandedIconColor,
-    wideSubMenuBackgroundColor: settings?.wideSubMenuBackgroundColor,
-    wideSubMenuBoxShadow: settings?.wideSubMenuBoxShadow,
-    wideSubMenuMargin: settings?.wideSubMenuMargin,
-    wideSubMenuPadding: settings?.wideSubMenuPadding,
-    narrowMenuItemPadding: settings?.narrowMenuItemPadding,
-    narrowSubMenuFlexGap: settings?.narrowSubMenuFlexGap,
-    narrowSubMenuMargin: settings?.narrowSubMenuMargin,
-    narrowSubMenuPadding: settings?.narrowSubMenuPadding,
-    narrowSubMenuMenuItemPadding: settings?.narrowSubMenuMenuItemPadding,
-    narrowSubMenuBackgroundColor: settings?.narrowSubMenuBackgroundColor,
+    "amm-expandControlBackgroundColor": settings?.expandControlBackgroundColor,
+    "amm-notExpandedIconColor": settings?.notExpandedIconColor,
+    "amm-expandedIconColor": settings?.expandedIconColor,
+    "amm-wideSubMenuBackgroundColor": settings?.wideSubMenuBackgroundColor,
+    "amm-wideSubMenuBoxShadow": settings?.wideSubMenuBoxShadow,
+    "amm-wideSubMenuMargin": settings?.wideSubMenuMargin,
+    "amm-wideSubMenuPadding": settings?.wideSubMenuPadding,
+    "amm-narrowMenuItemPadding": settings?.narrowMenuItemPadding,
+    "amm-narrowSubMenuFlexGap": settings?.narrowSubMenuFlexGap,
+    "amm-narrowSubMenuMargin": settings?.narrowSubMenuMargin,
+    "amm-narrowSubMenuPadding": settings?.narrowSubMenuPadding,
+    "amm-narrowSubMenuMenuItemPadding": settings?.narrowSubMenuMenuItemPadding,
+    "amm-narrowSubMenuBackgroundColor": settings?.narrowSubMenuBackgroundColor,
 }}>
     @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
@@ -77,14 +77,14 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
                     display: none;
                     align-items: center;
                     width: 1em;
-                    color: var(--expandedIconColor, #586f8a);
+                    color: var(--amm-expandedIconColor, #586f8a);
                 }
 
                 > .not-expanded-icon {
                     display: flex;
                     align-items: center;
                     width: 1em;
-                    color: var(--notExpandedIconColor, #586f8a);
+                    color: var(--amm-notExpandedIconColor, #586f8a);
                 }
             }
         }
@@ -92,11 +92,11 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
         > .sub-menu {
             position: absolute;
             flex-direction: column;
-            gap: var(--narrowSubMenuFlexGap, 0.18rem);
-            margin: var(--wideSubMenuMargin, 0);
-            padding: var(--wideSubMenuPadding, 0.1rem 0.2rem 0.1rem 0.2rem);
-            background-color: var(--wideSubMenuBackgroundColor, #d0dae0);
-            box-shadow: var(--wideSubMenuBoxShadow, 0.12rem 0.12rem 0.12rem #2f3340);
+            gap: var(--amm-narrowSubMenuFlexGap, 0.18rem);
+            margin: var(--amm-wideSubMenuMargin, 0);
+            padding: var(--amm-wideSubMenuPadding, 0.1rem 0.2rem 0.1rem 0.2rem);
+            background-color: var(--amm-wideSubMenuBackgroundColor, #d0dae0);
+            box-shadow: var(--amm-wideSubMenuBoxShadow, 0.12rem 0.12rem 0.12rem #2f3340);
             display: none;
         }
     }
@@ -140,26 +140,26 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
                 display: flex;
 
                 > .menu-item {
-                    padding: var(--narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
+                    padding: var(--amm-narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
                 }
 
                 > .expand-control {
                     flex: 1 1 auto;
                     padding-left: 0.2em;
-                    background-color: var(--expandControlBackgroundColor, #bcc3c8);
+                    background-color: var(--amm-expandControlBackgroundColor, #bcc3c8);
                     cursor: pointer;
                 }
             }
 
             > .sub-menu {
                 position: static;
-                margin: var(--narrowSubMenuMargin, -0.18rem 0 0 0);
-                padding: var(--narrowSubMenuPadding, 0.36rem 0 0 0);
-                background-color: var(--narrowSubMenuBackgroundColor, #bcc3c8);
+                margin: var(--amm-narrowSubMenuMargin, -0.18rem 0 0 0);
+                padding: var(--amm-narrowSubMenuPadding, 0.36rem 0 0 0);
+                background-color: var(--amm-narrowSubMenuBackgroundColor, #bcc3c8);
                 box-shadow: none;
 
                 > .menu-item {
-                    padding: var(--narrowSubMenuMenuItemPadding, 0 0 0 1.7rem);
+                    padding: var(--amm-narrowSubMenuMenuItemPadding, 0 0 0 1.7rem);
                 }
             }
 
