@@ -14,7 +14,7 @@
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.0.1",
     "@astrojs/sitemap": "^3.2.1",
-    "@pbkware/astro-main-menu": "^1.0.0",
+    "@pbkware/astro-main-menu": "^2.0.0",
     "astro": "^5.0.8",
     "sass": "^1.81.0",
     "typescript": "^5.6.3"
