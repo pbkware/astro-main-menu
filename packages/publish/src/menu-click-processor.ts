@@ -67,7 +67,7 @@ export class MenuClickProcessor {
                     }
                 });
 
-                const menuItemElementList = mainMenuComponent.querySelectorAll('.menu-item');
+                const menuItemElementList = mainMenuComponent.querySelectorAll('div.menu-item');
                 menuItemElementList.forEach((element) => {
                     if (element instanceof HTMLElement) {
                         element.addEventListener('click', () => {

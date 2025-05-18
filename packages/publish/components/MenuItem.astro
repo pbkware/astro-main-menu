@@ -1,6 +1,7 @@
 ---
-import type { MenuItemDefinition } from '../ts-out/menu-item-definition';
-import type { MenuItemSettings } from '../ts-out/settings';
+import { ClickHandlerType } from '../ts-out/menu-item-definition';
+import { type MenuItemDefinition } from '../ts-types/menu-item-definition';
+import type { MenuItemSettings } from '../ts-types/settings';
 
 export interface Props {
     class: string;
@@ -10,18 +11,29 @@ export interface Props {
 };
 
 const { class: className, settings, menuItemDefinition, ...rest } = Astro.props;
+const clickHandlerType = menuItemDefinition.clickHandlerType;
+const useAnchorTag = (clickHandlerType === ClickHandlerType.AnchorTag || (clickHandlerType === undefined && menuItemDefinition.url !== undefined));
 ---
 
 {
-    <div
-        class:list={['menu-item', className]} {...rest}
-        title={menuItemDefinition.title}
-        data-url={menuItemDefinition.url}
-        data-id={menuItemDefinition.id}
-        data-data={menuItemDefinition.data}
-    >
-        {menuItemDefinition.text}
-    </div>
+    (useAnchorTag) ?
+        <a
+            class:list={['menu-item', className]} {...rest}
+            href={menuItemDefinition.url}
+            title={menuItemDefinition.title}
+        >
+            {menuItemDefinition.text}
+        </a>
+    :
+        <div
+            class:list={['menu-item', className]} {...rest}
+            title={menuItemDefinition.title}
+            data-url={menuItemDefinition.url}
+            data-id={menuItemDefinition.id}
+            data-data={menuItemDefinition.data}
+        >
+            {menuItemDefinition.text}
+        </div>
 }
 
 

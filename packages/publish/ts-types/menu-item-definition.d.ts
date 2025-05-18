@@ -1,7 +1,7 @@
 export interface MenuItemDefinition {
     /** Text which will be displayed in a menu item. Always required */
     text: string;
-    /** Url which will be navigated to if a menu item is clicked.  Note that this behaviour can be overrided by assigning a handler to MenuClickProcessor.dataClickEventer */
+    /** Url which will be navigated to if a menu item is clicked.  Note that if  clickHandlerType is MenuClickProcessor, then this behaviour can be overrided by assigning a handler to MenuClickProcessor.dataClickEventer */
     url?: string;
     /** Title which will be displayed near a menu item when it is hovered */
     title?: string;
@@ -9,6 +9,14 @@ export interface MenuItemDefinition {
     id?: string;
     /** Passed to MenuClickProcessor.dataClickEventer handler.  Can hold data specific to this menu item that is used by handler */
     data?: string;
+    /** Specifies the type of click handler to use */
+    clickHandlerType?: ClickHandlerType;
     /** Specifies menu items in a sub menu attached to this menu item.  Note that only top level menu items can have children */
     children?: readonly MenuItemDefinition[];
+}
+export declare enum ClickHandlerType {
+    /** Menu Item has an Anchor Tag (<a>) which handles clicks by navigating to the specified URL */
+    AnchorTag = 0,
+    /** Menu Item clicks are handled by the MenuClickProcessor class which uses the id, data and url fields to determine what action to take */
+    MenuClickProcessor = 1
 }
