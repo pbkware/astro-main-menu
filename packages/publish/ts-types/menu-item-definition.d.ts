@@ -9,12 +9,14 @@ export interface MenuItemDefinition {
     id?: string;
     /** Passed to MenuClickProcessor.dataClickEventer handler.  Can hold data specific to this menu item that is used by handler */
     data?: string;
-    /** Specifies the type of click handler to use */
+    /** Specifies the type of click handler to use.
+     * If undefined, then, if url is defined, the clickHandlerType is set to AnchorTag, otherwise it is set to MenuClickProcessor.
+     */
     clickHandlerType?: ClickHandlerType;
     /** Specifies menu items in a sub menu attached to this menu item.  Note that only top level menu items can have children */
     children?: readonly MenuItemDefinition[];
 }
-export declare enum ClickHandlerType {
+export declare const enum ClickHandlerType {
     /** Menu Item has an Anchor Tag (<a>) which handles clicks by navigating to the specified URL */
     AnchorTag = 0,
     /** Menu Item clicks are handled by the MenuClickProcessor class which uses the id, data and url fields to determine what action to take */

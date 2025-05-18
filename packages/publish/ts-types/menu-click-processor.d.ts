@@ -5,19 +5,19 @@ declare global {
 }
 /** Processes menu item clicks.  Only access this class via MenuClickProcessor.get() as only a single instance can exist (singleton) */
 export declare class MenuClickProcessor {
-    /** MainMenu component root element */
-    readonly mainMenuElement: Element;
-    /** Hamburger component root element. Click events is used to activate and deactive main menu */
-    readonly hamburgerElement: Element;
     /** Assign a handler to customise the behaviour of click events */
     dataClickEventer: MenuClickProcessor.DataClickEventer | undefined;
-    private readonly _expandControlElements;
     private _expandedExpandableItemElement;
     constructor();
+    /** MainMenu component root element */
+    get mainMenuElement(): Element;
+    /** Hamburger component root element. Click events is used to activate and deactive main menu */
+    get hamburgerElement(): Element;
     /** Returns true if MenuClickProcessor handles the elements click event.  This includes root hamburger element and expand-control elements and their children nodes */
     isClickHandledEventTarget(eventTarget: EventTarget): boolean;
     /** Undisplays the Main Menu and deactivates the Hamburger if the Hamburger is active */
     deactivateNarrow(): void;
+    private initialisePage;
     private awaitNavigate;
     private ensureNotExpanded;
 }

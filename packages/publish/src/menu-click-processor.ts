@@ -9,89 +9,34 @@ declare global {
 
 /** Processes menu item clicks.  Only access this class via MenuClickProcessor.get() as only a single instance can exist (singleton) */
 export class MenuClickProcessor {
-    /** MainMenu component root element */
-    readonly mainMenuElement: Element;
-    /** Hamburger component root element. Click events is used to activate and deactive main menu */
-    readonly hamburgerElement: Element;
-
     /** Assign a handler to customise the behaviour of click events */
     dataClickEventer: MenuClickProcessor.DataClickEventer | undefined;
 
-    private readonly _expandControlElements = new Array<Element>();
     private _expandedExpandableItemElement: Element | undefined;
 
     constructor() {
+        document.addEventListener('astro:before-swap', () => {this._expandedExpandableItemElement = undefined }); // Ensure there is no reference to an ExpandableItem
+        document.addEventListener('astro:after-swap', () => this.initialisePage());
+        this.initialisePage();
+    }
+
+    /** MainMenu component root element */
+    get mainMenuElement(): Element {
+        const mainMenuComponent = document.querySelector('.main-menu');
+        if (mainMenuComponent === null) {
+            throw new Error('MainMenu Component not found');
+        } else {
+            return mainMenuComponent;
+        }
+    }
+
+    /** Hamburger component root element. Click events is used to activate and deactive main menu */
+    get hamburgerElement(): Element {
         const hamburgerElement = document.querySelector('.hamburger');
         if (hamburgerElement === null) {
             throw new Error('Hamburger Icon not found');
         } else {
-            this.hamburgerElement = hamburgerElement;
-            const mainMenuComponent = document.querySelector('.main-menu');
-            if (mainMenuComponent === null) {
-                throw new Error('MainMenu Component not found');
-            } else {
-                this.mainMenuElement = mainMenuComponent;
-                hamburgerElement.classList.remove(MenuClickProcessor.hamburgerActiveClassName);
-                mainMenuComponent.classList.remove(MenuClickProcessor.mainMenuDisplayedClassName);
-
-                hamburgerElement.addEventListener('click', () => {
-                    this.ensureNotExpanded();
-                    hamburgerElement.classList.toggle(MenuClickProcessor.hamburgerActiveClassName);
-                    mainMenuComponent.classList.toggle(MenuClickProcessor.mainMenuDisplayedClassName);
-                });
-
-                const expandableItemElementList = mainMenuComponent.querySelectorAll('.expandable-item');
-                expandableItemElementList.forEach((element) => {
-                    const expandControlElement = element.querySelector('.expand-control');
-                    if (expandControlElement === null) {
-                        throw new Error(`expand-control element for "${element.innerHTML}" not found`);
-                    } else {
-                        element.classList.remove(MenuClickProcessor.expandableItemExpandedClassName);
-
-                        this._expandControlElements.push(expandControlElement);
-                        expandControlElement.addEventListener('click', () => {
-
-                            if (this._expandedExpandableItemElement === undefined) {
-                                this._expandedExpandableItemElement = element;
-                                element.classList.toggle(MenuClickProcessor.expandableItemExpandedClassName);
-                            } else {
-                                if (element === this._expandedExpandableItemElement) {
-                                    element.classList.toggle(MenuClickProcessor.expandableItemExpandedClassName);
-                                } else {
-                                    this._expandedExpandableItemElement.classList.remove(MenuClickProcessor.expandableItemExpandedClassName);
-                                    this._expandedExpandableItemElement = element;
-                                    element.classList.add(MenuClickProcessor.expandableItemExpandedClassName);
-                                }
-                            }
-                        });
-                    }
-                });
-
-                const menuItemElementList = mainMenuComponent.querySelectorAll('div.menu-item');
-                menuItemElementList.forEach((element) => {
-                    if (element instanceof HTMLElement) {
-                        element.addEventListener('click', () => {
-                            const dataset = element.dataset;
-                            const id = dataset.id;
-                            const data = dataset.data;
-                            const url = dataset.url;
-
-                            let handled: boolean;
-                            if (this.dataClickEventer === undefined) {
-                                handled = false;
-                            } else {
-                                handled = this.dataClickEventer(element, id, data, url);
-                            }
-
-                            if (!handled && url !== undefined) {
-                                this.awaitNavigate(url, { history: 'push' } );
-                            } else {
-                                this.deactivateNarrow();
-                            }
-                        });
-                    }
-                });
-            }
+            return hamburgerElement;
         }
     }
 
@@ -132,8 +77,76 @@ export class MenuClickProcessor {
         }
     }
 
+    private initialisePage() {
+        const hamburgerElement = this.hamburgerElement;
+        const mainMenuComponent = this.mainMenuElement;
+
+        hamburgerElement.classList.remove(MenuClickProcessor.hamburgerActiveClassName);
+        mainMenuComponent.classList.remove(MenuClickProcessor.mainMenuDisplayedClassName);
+
+        hamburgerElement.addEventListener('click', () => {
+            this.ensureNotExpanded();
+            hamburgerElement.classList.toggle(MenuClickProcessor.hamburgerActiveClassName);
+            mainMenuComponent.classList.toggle(MenuClickProcessor.mainMenuDisplayedClassName);
+        });
+
+        const expandableItemElementList = mainMenuComponent.querySelectorAll('.expandable-item');
+        expandableItemElementList.forEach((element) => {
+            const expandControlElement = element.querySelector('.expand-control');
+            if (expandControlElement === null) {
+                throw new Error(`expand-control element for "${element.innerHTML}" not found`);
+            } else {
+                element.classList.remove(MenuClickProcessor.expandableItemExpandedClassName);
+
+                const expandControlElements = new Array<Element>();
+                expandControlElements.push(expandControlElement);
+                expandControlElement.addEventListener('click', () => {
+
+                    if (this._expandedExpandableItemElement === undefined) {
+                        this._expandedExpandableItemElement = element;
+                        element.classList.toggle(MenuClickProcessor.expandableItemExpandedClassName);
+                    } else {
+                        if (element === this._expandedExpandableItemElement) {
+                            element.classList.toggle(MenuClickProcessor.expandableItemExpandedClassName);
+                        } else {
+                            this._expandedExpandableItemElement.classList.remove(MenuClickProcessor.expandableItemExpandedClassName);
+                            this._expandedExpandableItemElement = element;
+                            element.classList.add(MenuClickProcessor.expandableItemExpandedClassName);
+                        }
+                    }
+                });
+            }
+        });
+
+        const menuItemElementList = mainMenuComponent.querySelectorAll('div.menu-item');
+        menuItemElementList.forEach((element) => {
+            if (element instanceof HTMLElement) {
+                element.addEventListener('click', () => {
+                    const dataset = element.dataset;
+                    const id = dataset.id;
+                    const data = dataset.data;
+                    const url = dataset.url;
+
+                    let handled: boolean;
+                    if (this.dataClickEventer === undefined) {
+                        handled = false;
+                    } else {
+                        handled = this.dataClickEventer(element, id, data, url);
+                    }
+
+                    if (!handled && url !== undefined) {
+                        this.awaitNavigate(url, { history: 'push' } );
+                    } else {
+                        this.deactivateNarrow();
+                    }
+                });
+            }
+        });
+    }
+
     private async awaitNavigate(url: string, options: Options) {
-        await navigate(url, options); // I don't think this ever returns.  So following lines are probably superfluous
+        await navigate(url, options);
+        // Can return if soft load (however following code is probably superfluous)
         this.deactivateNarrow();
         return;
     }

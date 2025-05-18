@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import NavBar from '../components/NavBar.astro';
 const title = 'Astro Main Menu Demo'
 
@@ -19,6 +20,7 @@ const pageTitle = frontmatter.title;
         <link rel="sitemap" href="/sitemap-index.xml" />
         <meta name="viewport" content="width=device-width" />
         <title>{title}</title>
+        <ClientRouter />
     </head>
 
     <body>
