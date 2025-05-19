@@ -1,7 +1,7 @@
 {
   "name": "astro-main-menu-project",
   "private": true,
-  "version": "0.9.3",
+  "version": "3.0.0",
   "type": "module",
   "scripts": {
     "build": "npm --filter astro-main-menu --filter www run build",
