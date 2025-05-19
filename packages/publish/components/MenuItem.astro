@@ -1,5 +1,4 @@
 ---
-import { ClickHandlerType } from '../ts-out/menu-item-definition';
 import { type MenuItemDefinition } from '../ts-types/menu-item-definition';
 import type { MenuItemSettings } from '../ts-types/settings';
 
@@ -12,9 +11,8 @@ export interface Props {
 
 const { class: className, settings, menuItemDefinition, ...rest } = Astro.props;
 const clickHandlerType = menuItemDefinition.clickHandlerType;
-const useAnchorTag = (clickHandlerType === ClickHandlerType.AnchorTag || (clickHandlerType === undefined && menuItemDefinition.url !== undefined));
+const useAnchorTag = clickHandlerType === 'anchorTag' || (clickHandlerType === undefined && menuItemDefinition.url !== undefined);
 ---
-
 {
     (useAnchorTag) ?
         <a

@@ -22,7 +22,7 @@ export declare class MenuClickProcessor {
     private ensureNotExpanded;
 }
 export declare namespace MenuClickProcessor {
-    /** Returns true if click event was handled. Otherwise event was not handled and processor will attempt to navigate to URL */
+    /** Returns true if click event handling was completed and navigation should not be attempted. Otherwise processor will attempt to navigate to URL */
     type DataClickEventer = (this: void, 
     /** The HTML element which generated the click event */
     element: HTMLElement, 

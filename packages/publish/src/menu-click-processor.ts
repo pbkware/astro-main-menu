@@ -160,7 +160,7 @@ export class MenuClickProcessor {
 }
 
 export namespace MenuClickProcessor {
-    /** Returns true if click event was handled. Otherwise event was not handled and processor will attempt to navigate to URL */
+    /** Returns true if click event handling was completed and navigation should not be attempted. Otherwise processor will attempt to navigate to URL */
     export type DataClickEventer = (
         this: void,
         /** The HTML element which generated the click event */
@@ -171,7 +171,7 @@ export namespace MenuClickProcessor {
         data: string | undefined,
         /** The `url` value from the menu item's corresponding MenuItemDefinition. A click on a menu item will navigate to this URL unless overridden in the dataClickEventer handler. */
         url: string | undefined
-    ) => boolean; // true if handled
+    ) => boolean; // true if click event was fully handled and navigation should not be attempted
 
     /** Class name used to specify hamburger is active */
     export const hamburgerActiveClassName = 'active';

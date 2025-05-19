@@ -135,49 +135,61 @@ import { type MenuItemDefinition, Hamburger, MainMenu } from '@pbkware/astro-mai
 const menuItemDefinitions: MenuItemDefinition[] = [
   {
     text: 'Start',
-    url: '/',
+    url: base,
     children: [
       {
         text: 'Home',
-        url: '/',
+        url: base,
       },
       {
         text: 'Installation',
-        url: '/start/installation',
+        url: `/start/installation/`,
       },
       {
         text: 'Quick',
-        url: '/start/quick',
+        url: `/start/quick/`,
       },
       {
         text: 'Using',
-        url: '/start/using',
+        url: `/start/using/`,
       },
     ]
   },
   {
     text: 'Reference',
-    url: '/reference',
+    url: `/reference/`,
   },
   {
-    text: 'Other',
-    url: '/other',
+    text: 'JavaScript',
+    url: `/javascript/`,
     children: [
       {
-        text: 'Run JavaScript',
+        text: 'Run TypeScript function',
         title: 'Demonstrates using a menu item to run a TypeScript function',
         id: 'alert',
         data: 'Menu item ran JavaScript/TypeScript which displayed this alert',
       },
       {
-        text: 'Why SASS',
-        url: '/other/why-sass',
+        text: `Navigate to URL (About page)`,
+        title: 'Demonstrates navigating to a URL using the MenuClickProcessor',
+        url: `/about/`,
+        clickHandlerType: 'menuClickProcessor',
       },
     ]
   },
   {
     text: 'About',
-    url: '/about',
+    url: `/about/`,
+    children: [
+      {
+        text: 'Releases',
+        url: `/about/releases/`,
+      },
+      {
+        text: 'Why SASS',
+        url: `/about/why-sass/`,
+      },
+    ]
   },
 ];
 ---
@@ -186,9 +198,23 @@ const menuItemDefinitions: MenuItemDefinition[] = [
   <MainMenu menuItemDefinitions={menuItemDefinitions} />
 </nav>
 ```
-## Menu Item click processor script
+## Navigation
 
-Client side, it is necessary to process clicks on menu items.  To do this, include a script somewhere in your project which gets the singleton instance of the ```MenuClickProcessor``` class.  This ensures this singleton instance has been created.
+You can configure menu items to navigate to other pages by either:
+* using Anchor tags (`<a>`)
+* using the MenuClickProcessor
+
+Normally you would configure menu items to use Anchor tags for navigation. To do this, you only need to set the `url` field of the `MenuItemDefinition` to the target URL.
+
+You can also navigate using the `MenuClickProcessor`. You may wish to do this if you wish to execute some JavaScript code before navigating.  This is discussed below.
+
+## Running a JavaScript function
+
+The [`MenuClickProcessor`](../../reference/#menuclickprocessor) class can be used to run a JavaScript function when a menu item is clicked.  Menu items will process clicks with this class if either:
+* `MenuItemDefinition.clickHandlerType` is set to `menuClickProcessor`
+* `MenuItemDefinition.url` is `undefined`
+
+To use `MenuClickProcessor`, it is necessary to ensure that this singleton is created. This can be done by including the following script somewhere in the project:
 
 ```ts
 <script>
@@ -197,9 +223,26 @@ Client side, it is necessary to process clicks on menu items.  To do this, inclu
 </script>
 ```
 
-The [MenuClickProcessor](../../reference/#menuclickprocessor) singleton instance will automatically handle navigation to the ```url``` specified in the [MenuItemDefinition](../../reference/#menuitemdefinition) of the clicked menu item.  However it is possible to customise the behaviour of a click event.
+By default, `MenuClickProcessor` will navigate to the `url` specified in the [MenuItemDefinition](../../reference/#menuitemdefinition) of the clicked menu item.  However it is possible to customise the behaviour of a click event by assigning an event handler closure/function to the `MenuClickProcessor.dataClickEventer` property.
 
-To handle a click event differently, assign an event handler closure/function to the ```dataClickEventer``` property of the gotten processor.  This handler can have up to 4 parameters:
+```ts
+<script>
+  import { MenuClickProcessor } from '@pbkware/astro-main-menu';
+  const processor = MenuClickProcessor.get();
+
+  // Handle dataClick event.  
+  processor.dataClickEventer = (element, id, data, url) => {
+    if (id === 'alert') {
+      setTimeout(() => alert(data), 0);
+      return true; // Indicate event handling is complete.
+    } else {
+      return false; // Indicate event handling not complete.  Processor will then try and navigate to URL
+    }
+  }
+</script>
+```
+
+The `dataClickEventer` handler can have up to 4 parameters:
 1. **element: HTMLElement** - The HTML element which generated the click event.
 1. **id: string | undefined** - If defined, can be used to easily identify which menu item was clicked.
 1. **data: string | undefined** - Contains the data specified in the corresponding [MenuItemDefinition](../../reference/#menuitemdefinition).
@@ -208,23 +251,6 @@ To handle a click event differently, assign an event handler closure/function to
 The event handler should return a boolean indicating whether it handled the click event:
 * **false** - The event was not handled and the processor should navigate to the page specified by the URL specified in the corresponding MenuItemDefinition.
 * **true** - The event was handled and the processor will not handle it any further other than deactivating the menu.
-
-```ts
-<script>
-  import { MenuClickProcessor } from '@pbkware/astro-main-menu';
-  const processor = MenuClickProcessor.get(); // This always needs to be called however only need processor if want to handle dataClick event
-
-  // Handle dataClick event.  
-  processor.dataClickEventer = (element, id, data, url) => {
-    if (id === 'alert') {
-      setTimeout(() => alert(data), 0);
-      return true; // Indicate event was handled.
-    } else {
-      return false; // Indicate event not handled.  processor will then try and navigate to URL
-    }
-  }
-</script>
-```
 
 You can use [MenuClickProcessor](../../reference/#menuclickprocessor) to deactivate a main menu when displayed in narrow mode using its `deactivateNarrow()` method.  This can be used to remove a main menu when the user clicks outside the menu.  However it is first necessary to see that the click event has not bubbled up from the Hamburger or Main Menu elements.  The `isClickHandledEventTarget()` can be used to check this.
 

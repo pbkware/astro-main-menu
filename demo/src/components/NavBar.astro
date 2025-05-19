@@ -40,24 +40,36 @@ const menuItemDefinitions: MenuItemDefinition[] = [
         url: `${base}reference/`,
     },
     {
-        text: 'Other',
-        url: `${base}other/`,
+        text: 'JavaScript',
+        url: `${base}javascript/`,
         children: [
             {
-                text: 'Run JavaScript',
+                text: 'Run TypeScript function',
                 title: 'Demonstrates using a menu item to run a TypeScript function',
                 id: 'alert',
                 data: 'Menu item ran JavaScript/TypeScript which displayed this alert',
             },
             {
-                text: 'Why SASS',
-                url: `${base}other/why-sass/`,
+                text: `Navigate to URL (About page)`,
+                title: 'Demonstrates navigating to a URL using the MenuClickProcessor',
+                url: `${base}about/`,
+                clickHandlerType: 'menuClickProcessor',
             },
         ]
     },
     {
         text: 'About',
         url: `${base}about/`,
+        children: [
+            {
+                text: 'Releases',
+                url: `${base}about/releases/`,
+            },
+            {
+                text: 'Why SASS',
+                url: `${base}about/why-sass/`,
+            },
+        ]
     },
 ];
 ---

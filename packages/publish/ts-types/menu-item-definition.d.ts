@@ -16,9 +16,4 @@ export interface MenuItemDefinition {
     /** Specifies menu items in a sub menu attached to this menu item.  Note that only top level menu items can have children */
     children?: readonly MenuItemDefinition[];
 }
-export declare const enum ClickHandlerType {
-    /** Menu Item has an Anchor Tag (<a>) which handles clicks by navigating to the specified URL */
-    AnchorTag = 0,
-    /** Menu Item clicks are handled by the MenuClickProcessor class which uses the id, data and url fields to determine what action to take */
-    MenuClickProcessor = 1
-}
+export type ClickHandlerType = 'anchorTag' | 'menuClickProcessor';

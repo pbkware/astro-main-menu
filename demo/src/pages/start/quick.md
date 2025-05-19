@@ -239,7 +239,7 @@ title: 'Home'
 # Home
 ```
 
-## Step 7: Create pages: side, left, right and about
+## Step 7: Create pages: nature, fauna, flora and about
 
 Make 4 copies of the `index.md` file in the `/src/pages` folder and name them:
 

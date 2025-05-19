@@ -9,7 +9,7 @@ title: 'Reference'
 export interface MenuItemDefinition {
     /** Text which will be displayed in a menu item. Always required */
     text: string;
-    /** Url which will be navigated to if a menu item is clicked.  Note that this behaviour can be overrided by assigning a handler to MenuClickProcessor.dataClickEventer */
+    /** Url which will be navigated to if a menu item is clicked.  Note that if  clickHandlerType is MenuClickProcessor, then this behaviour can be overrided by assigning a handler to MenuClickProcessor.dataClickEventer */
     url?: string;
     /** Title which will be displayed near a menu item when it is hovered */
     title?: string;
@@ -17,9 +17,14 @@ export interface MenuItemDefinition {
     id?: string;
     /** Passed to MenuClickProcessor.dataClickEventer handler.  Can hold data specific to this menu item that is used by handler */
     data?: string;
+    /** Specifies the type of click handler to use.
+     * If undefined, then, if url is defined, the clickHandlerType is set to AnchorTag, otherwise it is set to MenuClickProcessor.*/
+    clickHandlerType?: ClickHandlerType;
     /** Specifies menu items in a sub menu attached to this menu item.  Note that only top level menu items can have children */
     children?: readonly MenuItemDefinition[];
 }
+
+export type ClickHandlerType = 'anchorTag' | 'menuClickProcessor';
 ```
 ## Settings
 
@@ -152,12 +157,12 @@ export interface HamburgerSettings {
 ```ts
 /** Processes menu item clicks.  Only access this class via MenuClickProcessor.get() as only a single instance can exist (singleton) */
 export class MenuClickProcessor {
-    /** MainMenu component root element */
-    readonly mainMenuElement: Element;
-    /** Hamburger component root element. Click events is used to activate and deactive main menu */
-    readonly hamburgerElement: Element;
     /** Assign a handler to customise the behaviour of click events */
     dataClickEventer: MenuClickProcessor.DataClickEventer | undefined;
+    /** MainMenu component root element */
+    get mainMenuElement(): Element;
+    /** Hamburger component root element. Click events is used to activate and deactive main menu */
+    get hamburgerElement(): Element;
     /** Returns true if MenuClickProcessor handles the elements click event.  This includes root hamburger element and expand-control elements and their children nodes */
     isClickHandledEventTarget(eventTarget: EventTarget): boolean;
     /** Undisplays the Main Menu and deactivates the Hamburger if the Hamburger is active */
@@ -168,16 +173,8 @@ export namespace MenuClickProcessor {
     /** Get singleton instance of MenuClickProcessor. If it does not already exist, it is created. */
     export function get(): MenuClickProcessor;
 
-    /** Class name used to specify hamburger is active */
-    export const hamburgerActiveClassName = "active";
-    /** Class name used to specify Main Menu is displayed */
-    export const mainMenuDisplayedClassName = "displayed";
-    /** Class name used to specify an expandable item (item with menu item and sub menu) has its sub menu expanded */
-    export const expandableItemExpandedClassName = "expanded";
-
     /** Returns true if click event was handled. Otherwise event was not handled and processor will attempt to navigate to URL */
-    export type DataClickEventer = (
-        this: void, 
+    export type DataClickEventer = (this: void, 
         /** The HTML element which generated the click event */
         element: HTMLElement, 
         /** The `id` value from the menu item's corresponding MenuItemDefinition. Can be used to easily identify which menu item was clicked. */
@@ -187,5 +184,12 @@ export namespace MenuClickProcessor {
         /** The `url` value from the menu item's corresponding MenuItemDefinition. A click on a menu item will navigate to this URL unless overridden in the dataClickEventer handler. */
         url: string | undefined
     ) => boolean;
+
+    /** Class name used to specify hamburger is active */
+    export const hamburgerActiveClassName = "active";
+    /** Class name used to specify Main Menu is displayed */
+    export const mainMenuDisplayedClassName = "displayed";
+    /** Class name used to specify an expandable item (item with menu item and sub menu) has its sub menu expanded */
+    export const expandableItemExpandedClassName = "expanded";
 }
 ```
