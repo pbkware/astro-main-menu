@@ -6,7 +6,8 @@ title: 'Using'
 To use the Astro Main Menu, you need to:
 * [Insert](#mainmenu-and-hamburger-components) the MainMenu and Hamburger components from Astro Main Menu in your Astro website.
 * [Define](#menu-items) the Menu Items to be included in the main menu.
-* [Write](#menu-item-click-processor-script) menu item click processor script.
+* [Check](#navigation) if default navigation is sufficient.
+* [Optionally](#running-a-javascript-function) add JavaScript code to handle menu item clicks.
 * [Specify](#widenarrow-breakpoint) the @media breakpoint to switch between wide and narrow (desktop and mobile).
 * [Setup](#styling) styling for main menu and hamburger.
 

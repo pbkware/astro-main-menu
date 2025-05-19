@@ -12,7 +12,7 @@ Steps:
 1. [Create NavBar component](#step-4-create-navbar-component)
 1. [Create Base Layout](#step-5-create-base-layout)
 1. [Create index (home) page](#step-6-create-index-home-page)
-1. [Create pages: side, left, right and about](#step-7-create-pages-side-left-right-and-about)
+1. [Create pages: nature, fauna, flora and about](#step-7-create-pages-nature-fauna-flora-and-about)
 1. [Test](#step-8-test)
 
 ## Step 1: Create a new Astro project
