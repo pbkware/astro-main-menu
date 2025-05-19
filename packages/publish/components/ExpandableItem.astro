@@ -47,10 +47,15 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
     "amm-expandControlBackgroundColor": settings?.expandControlBackgroundColor,
     "amm-notExpandedIconColor": settings?.notExpandedIconColor,
     "amm-expandedIconColor": settings?.expandedIconColor,
+    "amm-wideSubMenuFontFamily": settings?.wideSubMenuFontFamily,
+    "amm-wideSubMenuFontSize": settings?.wideSubMenuFontSize,
     "amm-wideSubMenuBackgroundColor": settings?.wideSubMenuBackgroundColor,
     "amm-wideSubMenuBoxShadow": settings?.wideSubMenuBoxShadow,
+    "amm-wideSubMenuFlexGap": settings?.wideSubMenuFlexGap,
     "amm-wideSubMenuMargin": settings?.wideSubMenuMargin,
     "amm-wideSubMenuPadding": settings?.wideSubMenuPadding,
+    "amm-narrowSubMenuFontFamily": settings?.narrowSubMenuFontFamily,
+    "amm-narrowSubMenuFontSize": settings?.narrowSubMenuFontSize,
     "amm-narrowMenuItemPadding": settings?.narrowMenuItemPadding,
     "amm-narrowSubMenuFlexGap": settings?.narrowSubMenuFlexGap,
     "amm-narrowSubMenuMargin": settings?.narrowSubMenuMargin,
@@ -92,7 +97,9 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
         > .sub-menu {
             position: absolute;
             flex-direction: column;
-            gap: var(--amm-narrowSubMenuFlexGap, 0.18rem);
+            font-family: var(--amm-wideSubMenuFontFamily, inherit);
+            font-size: var(--amm-wideSubMenuFontSize, 90%);
+            gap: var(--amm-wideSubMenuFlexGap, 0.18rem);
             margin: var(--amm-wideSubMenuMargin, 0);
             padding: var(--amm-wideSubMenuPadding, 0.1rem 0.2rem 0.1rem 0.2rem);
             background-color: var(--amm-wideSubMenuBackgroundColor, #d0dae0);
@@ -153,6 +160,9 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
 
             > .sub-menu {
                 position: static;
+                font-family: var(--amm-narrowSubMenuFontFamily, inherit);
+                font-size: var(--amm-narrowSubMenuFontSize, 90%);
+                gap: var(--amm-narrowSubMenuFlexGap, 0.18rem);
                 margin: var(--amm-narrowSubMenuMargin, -0.18rem 0 0 0);
                 padding: var(--amm-narrowSubMenuPadding, 0.36rem 0 0 0);
                 background-color: var(--amm-narrowSubMenuBackgroundColor, #bcc3c8);

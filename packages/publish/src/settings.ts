@@ -6,7 +6,7 @@ export interface MainMenuSettings extends ExpandableItemSettings, CommonHamburge
     mainMenuMargin?: string;
     /** padding applied to MainMenu. @defaultValue 0 */
     mainMenuPadding?: string;
-    /** font-size applied to the MainMenu when wide.  Will be inherited by MenuItem elements. @defaultValue 1.2rem */
+    /** font-size applied to the MainMenu when wide.  Will be inherited by wide Main MenuItem elements. @defaultValue 1.2em */
     wideMainMenuFontSize?: string;
     /** background-color applied to MainMenu when wide. @defaultValue #d0dae0 */
     wideMainMenuBackgroundColor?: string;
@@ -35,14 +35,24 @@ export interface ExpandableItemSettings extends MenuItemSettings {
     notExpandedIconColor?: string;
     /** color applied to the expanded Icon expand-control element within ExpandableItem. @defaultValue #bcc3c8 */
     expandedIconColor?: string;
+    /** font-family applied to wide SubMenu. @defaultValue inherit */
+    wideSubMenuFontFamily?: string;
+    /** font-size applied to the wide SubMenu.  Will be inherited by wide sub MenuItem elements. @defaultValue 90% */
+    wideSubMenuFontSize?: string;
     /** background-color applied to SubMenu within ExpandableItem when wide. @defaultValue #d0dae0 */
     wideSubMenuBackgroundColor?: string;
     /** box-shadow applied to SubMenu within ExpandableItem when wide. @defaultValue 0.14em 0.14em 0.14em #2f3340 */
     wideSubMenuBoxShadow?: string;
+    /** gap applied to SubMenu within ExpandableItem when wide. @defaultValue 0.18em */
+    wideSubMenuFlexGap?: string;
     /** margin applied to SubMenu within ExpandableItem when wide. @defaultValue 0 */
     wideSubMenuMargin?: string;
     /** padding applied to SubMenu within ExpandableItem when wide. @defaultValue 0.2em 0.2em 0.1em 0.2em */
     wideSubMenuPadding?: string;
+    /** font-family applied to narrow SubMenu. @defaultValue inherit */
+    narrowSubMenuFontFamily?: string;
+    /** font-size applied to the narrow SubMenu.  Will be inherited by narrow sub MenuItem elements. @defaultValue 90% */
+    narrowSubMenuFontSize?: string;
     /** padding applied to MenuItem under ExpandableItem when narrow. Does not apply to MenuItems under SubMenu @defaultValue 0 0.2em 0 0.8rem */
     narrowMenuItemPadding?: string;
     /** gap applied to SubMenu within ExpandableItem when narrow. @defaultValue 0.18em */
@@ -107,7 +117,7 @@ export interface HamburgerSettings extends CommonHamburgerAndMainMenuSettings {
 }
 
 export interface CommonHamburgerAndMainMenuSettings {
-    /** font-size applied to the MainMenu element and Hamburger when narrow.  Will be inherited by MenuItem elements. @defaultValue 1.8rem */
+    /** font-size applied to the MainMenu element and Hamburger when narrow.  Will be inherited by narrow Main MenuItem elements. @defaultValue 1.8rem */
     narrowMainMenuFontSize?: string;
 }
 
@@ -140,10 +150,15 @@ export namespace DefaultSettings {
         expandControlBackgroundColor: ExpandableItemSettings.narrowSubMenuBackgroundColor,
         notExpandedIconColor: ExpandableItemSettings.notExpandedIconColor,
         expandedIconColor: ExpandableItemSettings.notExpandedIconColor,
+        wideSubMenuFontFamily: 'inherit',
+        wideSubMenuFontSize: '90%',
         wideSubMenuBackgroundColor: wideMenuBackgroundColor,
         wideSubMenuBoxShadow: '0.14em 0.14em 0.14em #2f3340',
+        wideSubMenuFlexGap: '0.18em',
         wideSubMenuMargin: '0',
         wideSubMenuPadding: '0.2em 0.2em 0.1em 0.2em',
+        narrowSubMenuFontFamily: 'inherit',
+        narrowSubMenuFontSize: '90%',
         narrowMenuItemPadding: '0 0.2em 0 0.8rem',
         narrowSubMenuFlexGap: '0.18em',
         narrowSubMenuMargin: '-0.18rem 0 0 0',

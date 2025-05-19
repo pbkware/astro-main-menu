@@ -170,7 +170,15 @@ const menuItemDefinitions: MenuItemDefinition[] = [
 
 <script>
     import { MenuClickProcessor } from '@pbkware/astro-main-menu';
-    MenuClickProcessor.get();
+    const processor = MenuClickProcessor.get(); // Create/get singleton
+
+    // Hide narrow menu and hamburger if document is clicked outside menu
+    document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target === null || !processor.isClickHandledEventTarget(target)) {
+            processor.deactivateNarrow();
+        }
+    });
 </script>
 ```
 
