@@ -3,6 +3,18 @@ layout: ../../layouts/Base.astro
 title: 'Releases'
 ---
 
+- **4.0.0** - 1st Feb 2026
+  - Add prettier
+  - **Breaking**: Fix use of @media queries in line with [Sass breaking change](https://sass-lang.com/documentation/breaking-changes/media-logic/) related to Sass supporting Media Queries Level 4\.
+  Can no longer use Sass `or` operator in media queries. Need to use `,` as in CSS media queries.  This means that instead of using:
+    ```
+    @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint))
+    ```
+    need to use:
+    ```
+    @media screen and (hover: none), screen and (width < main-menu-config.$narrow-breakpoint)
+    ```
+  
 - **3.0.0** - 19th May 2025
   - Add support for Astro View Transitions
   - Add MenuItemDefinition.clickHandlerType which specifies the mechanism for handling menu clicks: Either an Anchor (`<a>`) tag or using the `MenuClickProcessor` class.

@@ -1,7 +1,7 @@
 {
   "name": "@pbkware/astro-main-menu",
   "description": "Responsive Main Menu and Hamburger components for Astro",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "type": "module",
   "types": "./index.d.ts",
   "exports": {
@@ -32,7 +32,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pbkware/astro-main-menu.git",
-    "directory": "packages/integration"
+    "directory": "packages/publish"
   },
   "license": "MIT",
   "bugs": {
