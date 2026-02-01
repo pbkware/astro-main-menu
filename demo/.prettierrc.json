@@ -10,11 +10,12 @@
   "bracketSameLine": false,
   "singleAttributePerLine": true,
   "endOfLine": "lf",
+  "plugins": ["prettier-plugin-astro"],
   "overrides": [
     {
-      "files": "*.html",
+      "files": "*.astro",
       "options": {
-        "parser": "angular"
+        "parser": "astro"
       }
     }
   ]
