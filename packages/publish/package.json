@@ -43,6 +43,7 @@
     "astro": "^5.0.8"
   },
   "devDependencies": {
+    "prettier": "3.8.1",
     "typescript": "^5.0.4",
     "vite": "^7.1.9"
   }
