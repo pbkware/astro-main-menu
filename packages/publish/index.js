@@ -1,2 +1,2 @@
-export * from "./components/index"
-export * from "./ts-out/index"
+export * from './components/index';
+export * from './ts-out/index';

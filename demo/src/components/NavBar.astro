@@ -1,185 +1,196 @@
 ---
 import { type MainMenuSettings, type MenuItemDefinition, DefaultSettings, Hamburger, MainMenu } from '@pbkware/astro-main-menu';
-import GitHubSvg from './GitHubSvg.astro'
+import GitHubSvg from './GitHubSvg.astro';
 import { astroMainMenuGitHubRepositoryUrl } from '../common/types-and-consts';
 
 export const navBackgroundColor = '#D6DAE0';
 
 const mainMenuSettings: MainMenuSettings = {
-    wideMainMenuBackgroundColor: navBackgroundColor,
-    wideSubMenuBackgroundColor: navBackgroundColor,
-}
+  wideMainMenuBackgroundColor: navBackgroundColor,
+  wideSubMenuBackgroundColor: navBackgroundColor,
+};
 
 const base = import.meta.env.BASE_URL;
 
 const menuItemDefinitions: MenuItemDefinition[] = [
-    {
-        text: 'Start',
+  {
+    text: 'Start',
+    url: base,
+    children: [
+      {
+        text: 'Home',
         url: base,
-        children: [
-            {
-                text: 'Home',
-                url: base,
-            },
-            {
-                text: 'Installation',
-                url: `${base}start/installation/`,
-            },
-            {
-                text: 'Quick',
-                url: `${base}start/quick/`,
-            },
-            {
-                text: 'Using',
-                url: `${base}start/using/`,
-            },
-        ]
-    },
-    {
-        text: 'Reference',
-        url: `${base}reference/`,
-    },
-    {
-        text: 'JavaScript',
-        url: `${base}javascript/`,
-        children: [
-            {
-                text: 'Run TypeScript function',
-                title: 'Demonstrates using a menu item to run a TypeScript function',
-                id: 'alert',
-                data: 'Menu item ran JavaScript/TypeScript which displayed this alert',
-            },
-            {
-                text: `Navigate to URL (About page)`,
-                title: 'Demonstrates navigating to a URL using the MenuClickProcessor',
-                url: `${base}about/`,
-                clickHandlerType: 'menuClickProcessor',
-            },
-        ]
-    },
-    {
-        text: 'About',
+      },
+      {
+        text: 'Installation',
+        url: `${base}start/installation/`,
+      },
+      {
+        text: 'Quick',
+        url: `${base}start/quick/`,
+      },
+      {
+        text: 'Using',
+        url: `${base}start/using/`,
+      },
+    ],
+  },
+  {
+    text: 'Reference',
+    url: `${base}reference/`,
+  },
+  {
+    text: 'JavaScript',
+    url: `${base}javascript/`,
+    children: [
+      {
+        text: 'Run TypeScript function',
+        title: 'Demonstrates using a menu item to run a TypeScript function',
+        id: 'alert',
+        data: 'Menu item ran JavaScript/TypeScript which displayed this alert',
+      },
+      {
+        text: `Navigate to URL (About page)`,
+        title: 'Demonstrates navigating to a URL using the MenuClickProcessor',
         url: `${base}about/`,
-        children: [
-            {
-                text: 'Releases',
-                url: `${base}about/releases/`,
-            },
-            {
-                text: 'Why SASS',
-                url: `${base}about/why-sass/`,
-            },
-        ]
-    },
+        clickHandlerType: 'menuClickProcessor',
+      },
+    ],
+  },
+  {
+    text: 'About',
+    url: `${base}about/`,
+    children: [
+      {
+        text: 'Releases',
+        url: `${base}about/releases/`,
+      },
+      {
+        text: 'Why SASS',
+        url: `${base}about/why-sass/`,
+      },
+    ],
+  },
 ];
 ---
 
 <nav class="navbar">
-    <a href={astroMainMenuGitHubRepositoryUrl} class="navbar-narrow-left">
-        <GitHubSvg />
-    </a>
+  <a
+    href={astroMainMenuGitHubRepositoryUrl}
+    class="navbar-narrow-left"
+  >
+    <GitHubSvg />
+  </a>
 
-    <a href={astroMainMenuGitHubRepositoryUrl} class="navbar-wide-left">
-        <GitHubSvg />
-    </a>
+  <a
+    href={astroMainMenuGitHubRepositoryUrl}
+    class="navbar-wide-left"
+  >
+    <GitHubSvg />
+  </a>
 
-    <MainMenu settings={mainMenuSettings} menuItemDefinitions={menuItemDefinitions} />
+  <MainMenu
+    settings={mainMenuSettings}
+    menuItemDefinitions={menuItemDefinitions}
+  />
 
-    <div class="narrow-heading">
-        <slot name="narrow-heading" />
-    </div>
+  <div class="narrow-heading">
+    <slot name="narrow-heading" />
+  </div>
 
-    <div class="navbar-wide-right">
-        <div class="navbar-wide-right-icon">
-        </div>
-        <Hamburger />
-    </div>
+  <div class="navbar-wide-right">
+    <div class="navbar-wide-right-icon"></div>
+    <Hamburger />
+  </div>
 </nav>
 
-<style lang="scss" define:vars={{
+<style
+  lang="scss"
+  define:vars={{
     wideNavBarBackgroundColor: navBackgroundColor,
     hamburgerWidth: DefaultSettings.hamburgerSettings.width,
-}}>
-    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+  }}
+>
+  @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
-    .navbar {
-        width: 100%;
-        background-color: var(--wideNavBarBackgroundColor, #d0dae0);
-        margin: 0;
-        padding: 0;
+  .navbar {
+    width: 100%;
+    background-color: var(--wideNavBarBackgroundColor, #d0dae0);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > .narrow-heading {
+      display: none;
+    }
+
+    > .navbar-narrow-left {
+      display: none;
+      color: black;
+      width: var(--hamburgerWidth, 1.8em);
+    }
+
+    > .navbar-wide-left {
+      display: flex;
+      color: black;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+
+    > .navbar-wide-right {
+      display: flex;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+
+    @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+      > .narrow-heading {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        font-size: small;
+      }
 
-        > .narrow-heading {
-            display: none;
+      > .navbar-narrow-left {
+        display: flex;
+        align-items: center;
+      }
+
+      > .navbar-wide-left {
+        display: none;
+      }
+
+      > .navbar-wide-right {
+        width: var(--hamburgerWidth, 1.8em);
+
+        > .navbar-wide-right-icon {
+          display: none;
         }
-
-        > .navbar-narrow-left {
-            display: none;
-            color: black;
-            width: var(--hamburgerWidth, 1.8em);
-        }
-
-        > .navbar-wide-left {
-            display: flex;
-            color: black;
-            align-items: center;
-            flex: 0 0 auto;
-        }
-
-        > .navbar-wide-right {
-            display: flex;
-            align-items: center;
-            flex: 0 0 auto;
-        }
-
-        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
-            > .narrow-heading {
-                display: flex;
-                align-items: center;
-                font-size: small;
-            }
-
-            > .navbar-narrow-left {
-                display: flex;
-                align-items: center;
-            }
-
-            > .navbar-wide-left {
-                display: none;
-            }
-
-            > .navbar-wide-right {
-                width: var(--hamburgerWidth, 1.8em);
-
-                > .navbar-wide-right-icon {
-                    display: none;
-                }
-            }
-        }
+      }
     }
+  }
 </style>
 
 <script>
-    import { MenuClickProcessor } from '@pbkware/astro-main-menu';
-    const processor = MenuClickProcessor.get(); // This always needs to be called however only need processor if want to handle dataClick event
+  import { MenuClickProcessor } from '@pbkware/astro-main-menu';
+  const processor = MenuClickProcessor.get(); // This always needs to be called however only need processor if want to handle dataClick event
 
-    // Handle dataClick event.  
-    processor.dataClickEventer = (_element, id, data) => {
-        if (id === 'alert') {
-            setTimeout(() => alert(data), 0);
-            return true; // Indicate event was handled.
-        } else {
-            return false; // Indicate event not handled.  processor will then try and navigate to URL
-        }
+  // Handle dataClick event.
+  processor.dataClickEventer = (_element, id, data) => {
+    if (id === 'alert') {
+      setTimeout(() => alert(data), 0);
+      return true; // Indicate event was handled.
+    } else {
+      return false; // Indicate event not handled.  processor will then try and navigate to URL
     }
+  };
 
-    // Hide narrow menu and hamburger if document is clicked outside menu
-    document.addEventListener('click', (event) => {
-        const target = event.target;
-        if (target === null || !processor.isClickHandledEventTarget(target)) {
-            processor.deactivateNarrow();
-        }
-    });
+  // Hide narrow menu and hamburger if document is clicked outside menu
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (target === null || !processor.isClickHandledEventTarget(target)) {
+      processor.deactivateNarrow();
+    }
+  });
 </script>

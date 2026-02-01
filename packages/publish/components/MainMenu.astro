@@ -4,74 +4,82 @@ import type { MainMenuSettings } from '../ts-types/settings';
 import ExpandableItem from './ExpandableItem.astro';
 
 export interface Props {
-    class?: string;
-    expandableItemClass?: string;
-    menuItemClass?: string;
-    settings?: MainMenuSettings;
-    menuItemDefinitions: readonly MenuItemDefinition[];
-    rest?: unknown;
-};
+  class?: string;
+  expandableItemClass?: string;
+  menuItemClass?: string;
+  settings?: MainMenuSettings;
+  menuItemDefinitions: readonly MenuItemDefinition[];
+  rest?: unknown;
+}
 
 const { class: classNames, expandableItemClass, menuItemClass, settings, menuItemDefinitions, ...rest } = Astro.props;
 ---
 
-<menu class:list={['main-menu', classNames]} {...rest}>
-    {
-        menuItemDefinitions.map((definition) => <ExpandableItem
-            class={expandableItemClass}
-            menuItemClass={menuItemClass}
-            settings={settings}
-            menuItemDefinition={definition}
-            {...rest}
-        />)
-    }
+<menu
+  class:list={['main-menu', classNames]}
+  {...rest}
+>
+  {
+    menuItemDefinitions.map((definition) => (
+      <ExpandableItem
+        class={expandableItemClass}
+        menuItemClass={menuItemClass}
+        settings={settings}
+        menuItemDefinition={definition}
+        {...rest}
+      />
+    ))
+  }
 </menu>
 
-<style lang="scss" define:vars={{
-    "amm-mainMenuFontFamily": settings?.mainMenuFontFamily,
-    "amm-wideMainMenuFontSize": settings?.wideMainMenuFontSize,
-    "amm-wideMainMenuBackgroundColor": settings?.wideMainMenuBackgroundColor,
-    "amm-narrowMainMenuFontSize": settings?.narrowMainMenuFontSize,
-    "amm-narrowMainMenuBackgroundColor": settings?.narrowMainMenuBackgroundColor,
-    "amm-narrowMainMenuMaxWidth": settings?.narrowMainMenuMaxWidth,
-    "amm-mainMenuMargin": settings?.mainMenuMargin,
-    "amm-mainMenuPadding": settings?.mainMenuPadding,
-    "amm-wideMainMenuFlexGap": settings?.wideMainMenuFlexGap,
-    "amm-narrowMainMenuTop": settings?.narrowMainMenuTop,
-    "amm-narrowMainMenuLeft": settings?.narrowMainMenuLeft,
-    "amm-narrowMainMenuRight": settings?.narrowMainMenuRight,
-    "amm-narrowMainMenuFlexGap": settings?.narrowMainMenuFlexGap,
-    "amm-narrowMainMenuBoxShadow": settings?.narrowMainMenuBoxShadow,
-    "amm-narrowMenuItemPadding": settings?.narrowMenuItemPadding,
-}}>
-    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+<style
+  lang="scss"
+  define:vars={{
+    'amm-mainMenuFontFamily': settings?.mainMenuFontFamily,
+    'amm-wideMainMenuFontSize': settings?.wideMainMenuFontSize,
+    'amm-wideMainMenuBackgroundColor': settings?.wideMainMenuBackgroundColor,
+    'amm-narrowMainMenuFontSize': settings?.narrowMainMenuFontSize,
+    'amm-narrowMainMenuBackgroundColor': settings?.narrowMainMenuBackgroundColor,
+    'amm-narrowMainMenuMaxWidth': settings?.narrowMainMenuMaxWidth,
+    'amm-mainMenuMargin': settings?.mainMenuMargin,
+    'amm-mainMenuPadding': settings?.mainMenuPadding,
+    'amm-wideMainMenuFlexGap': settings?.wideMainMenuFlexGap,
+    'amm-narrowMainMenuTop': settings?.narrowMainMenuTop,
+    'amm-narrowMainMenuLeft': settings?.narrowMainMenuLeft,
+    'amm-narrowMainMenuRight': settings?.narrowMainMenuRight,
+    'amm-narrowMainMenuFlexGap': settings?.narrowMainMenuFlexGap,
+    'amm-narrowMainMenuBoxShadow': settings?.narrowMainMenuBoxShadow,
+    'amm-narrowMenuItemPadding': settings?.narrowMenuItemPadding,
+  }}
+>
+  @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
-    .main-menu {
+  .main-menu {
+    display: flex;
+    font-family: var(--amm-mainMenuFontFamily, inherit);
+    font-size: var(--amm-wideMainMenuFontSize, 1.2em);
+    background-color: var(--amm-wideMainMenuBackgroundColor, inherit);
+    margin: var(--amm-mainMenuMargin, 0);
+    padding: var(--amm-mainMenuPadding, 0);
+    gap: var(--amm-wideMainMenuFlexGap, 0.8em);
+
+    @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+      display: none;
+
+      &.displayed {
         display: flex;
-        font-family: var(--amm-mainMenuFontFamily, inherit);
-        font-size: var(--amm-wideMainMenuFontSize, 1.2em);
-        background-color: var(--amm-wideMainMenuBackgroundColor, inherit);
-        margin: var(--amm-mainMenuMargin, 0);
-        padding: var(--amm-mainMenuPadding, 0);
-        gap: var(--amm-wideMainMenuFlexGap, .8em);
-
-        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
-            display: none;
-
-            &.displayed {
-                display: flex;
-                width: 100%;
-                position: absolute;
-                flex-direction: column;
-                background-color: var(--amm-narrowMainMenuBackgroundColor, #cddee8);
-                top: var(--amm-narrowMainMenuTop, 0);
-                left: var(--amm-narrowMainMenuLeft);
-                right: var(--amm-narrowMainMenuRight, 0);
-                font-size: var(--amm-narrowMainMenuFontSize, 1.8rem);
-                gap: var(--amm-narrowMainMenuFlexGap, 0.18rem);
-                max-width: var(--amm-narrowMainMenuMaxWidth, 15em);
-                box-shadow: var(--amm-narrowMainMenuBoxShadow, 0 .1rem .4rem black);
-            }
-        }
+        width: 100%;
+        position: absolute;
+        flex-direction: column;
+        background-color: var(--amm-narrowMainMenuBackgroundColor, #cddee8);
+        top: var(--amm-narrowMainMenuTop, 0);
+        left: var(--amm-narrowMainMenuLeft);
+        right: var(--amm-narrowMainMenuRight, 0);
+        font-size: var(--amm-narrowMainMenuFontSize, 1.8rem);
+        gap: var(--amm-narrowMainMenuFlexGap, 0.18rem);
+        max-width: var(--amm-narrowMainMenuMaxWidth, 15em);
+        box-shadow: var(--amm-narrowMainMenuBoxShadow, 0 0.1rem 0.4rem black);
+      }
     }
+  }
 </style>

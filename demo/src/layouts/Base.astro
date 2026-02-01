@@ -1,7 +1,7 @@
 ---
-import { ClientRouter } from "astro:transitions";
+import { ClientRouter } from 'astro:transitions';
 import NavBar from '../components/NavBar.astro';
-const title = 'Astro Main Menu Demo'
+const title = 'Astro Main Menu Demo';
 
 const { frontmatter } = Astro.props;
 
@@ -13,84 +13,100 @@ const pageTitle = frontmatter.title;
 ---
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="canonical" href={canonicalURl} />
-        <link rel="sitemap" href="/sitemap-index.xml" />
-        <meta name="viewport" content="width=device-width" />
-        <title>{title}</title>
-        <ClientRouter />
-    </head>
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/favicon.ico"
+    />
+    <link
+      rel="canonical"
+      href={canonicalURl}
+    />
+    <link
+      rel="sitemap"
+      href="/sitemap-index.xml"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
 
-    <body>
-        <NavBar>
-            <span class="narrow-heading" slot="narrow-heading">{title}</span>
-        </NavBar>
+  <body>
+    <NavBar>
+      <span
+        class="narrow-heading"
+        slot="narrow-heading"
+        >{title}</span
+      >
+    </NavBar>
 
-        <div id="titleAndContent">
-            <h1>{pageTitle}</h1>
-            <slot />
-        </div>
-    </body>
+    <div id="titleAndContent">
+      <h1>{pageTitle}</h1>
+      <slot />
+    </div>
+  </body>
 </html>
 
 <style>
-    * {
-        box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0 auto;
+    padding: 0;
+    font-size: calc(15px + 0.390625vw);
+  }
+
+  #titleAndContent {
+    width: 100%;
+    max-width: 80ch;
+    margin: 0 auto;
+    padding: 0 1rem;
+    line-height: 1.5;
+
+    /* Table */
+    table {
+      display: block;
+      overflow-x: auto;
+      border-collapse: collapse;
+
+      th,
+      td {
+        border: 1px solid darkslategrey;
+        padding: 0.3em;
+      }
     }
 
-    body {
-        margin: 0 auto;
-        padding: 0;
-        font-size: calc(15px + 0.390625vw);
+    /* Lists */
+    @media screen and (width > 331px) and (width < 430px) {
+      ul {
+        padding-left: 1em;
+      }
+
+      li > p {
+        display: inline;
+      }
     }
 
-    #titleAndContent {
-        width: 100%;
-        max-width: 80ch;
-        margin: 0 auto;
-        padding: 0 1rem;
-        line-height: 1.5;
+    /* Lists */
+    @media screen and (width <= 330px) {
+      li {
+        list-style-position: inside;
+      }
 
-        /* Table */
-        table {
-            display: block;
-            overflow-x: auto;
-            border-collapse: collapse;
+      ul {
+        padding-left: 0;
+      }
 
-            th,
-            td {
-                border: 1px solid darkslategrey;
-                padding: .3em;
-            }
-        }
-
-        /* Lists */
-        @media screen and (width > 331px) and (width < 430px) {
-            ul {
-                padding-left: 1em;
-            }
-
-            li > p {
-                display: inline;
-            }
-        }
-
-        /* Lists */
-        @media screen and (width <= 330px) {
-            li {
-                list-style-position: inside;
-            }
-
-            ul {
-                padding-left: 0;
-            }
-
-            li > p {
-                display: inline;
-            }
-        }
+      li > p {
+        display: inline;
+      }
     }
-
+  }
 </style>

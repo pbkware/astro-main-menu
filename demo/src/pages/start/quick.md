@@ -6,6 +6,7 @@ title: 'Quick start'
 This tutorial will step you through creating an Astro website with a main menu similar to this demo website.
 
 Steps:
+
 1. [Create a new Astro project](#step-1-create-a-new-astro-project)
 1. [Install Astro Main Menu](#step-2-install-astro-main-menu)
 1. [Configure wide/narrow breakpoint](#step-3-configure-widenarrow-breakpoint)
@@ -19,7 +20,7 @@ Steps:
 
 Ensure the required [prerequisites](https://docs.astro.build/en/install-and-setup/#prerequisites) are installed.
 
-Create a new empty Astro project which supports TypeScript.  Make sure dependencies are installed.
+Create a new empty Astro project which supports TypeScript. Make sure dependencies are installed.
 
 ```shell
 npm create astro@latest

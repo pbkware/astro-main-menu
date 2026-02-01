@@ -6,190 +6,220 @@ import MenuItem from './MenuItem.astro';
 import NotExpandedSvg from './NotExpandedSvg.astro';
 
 export interface Props {
-    class?: string;
-    menuItemClass?: string;
-    settings?: ExpandableItemSettings;
-    menuItemDefinition: MenuItemDefinition;
-    rest?: unknown;
-};
+  class?: string;
+  menuItemClass?: string;
+  settings?: ExpandableItemSettings;
+  menuItemDefinition: MenuItemDefinition;
+  rest?: unknown;
+}
 
 const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest } = Astro.props;
 ---
 
 {
-    (menuItemDefinition.children === undefined || menuItemDefinition.children.length === 0) ?
-        <MenuItem class:list={[menuItemClass]} class="menu-item" settings={settings} menuItemDefinition={menuItemDefinition} {...rest} />
-    :
-        <div class:list={['expandable-item', classNames]} {...rest}>
-            <div class="base">
-                <MenuItem class:list={[menuItemClass]} class="menu-item" settings={settings} menuItemDefinition={menuItemDefinition} {...rest} />
-                <div class="expand-control">
-                    <div class="not-expanded-icon">
-                        <NotExpandedSvg width="1em" height="1em" />
-                    </div>
-                    <div class="expanded-icon">
-                        <ExpandedSvg width="1em" height="1em" />
-                    </div>
-                </div>
-            </div>
-            {
-                (menuItemDefinition.children !== undefined && menuItemDefinition.children.length > 0) &&
-                    <menu class="sub-menu">
-                        { menuItemDefinition.children.map((childDefinition) =>
-                            <MenuItem class:list={[menuItemClass]} class="menu-item" settings={settings} menuItemDefinition={childDefinition} {...rest} />
-                        )}
-                    </menu>
-            }
+  menuItemDefinition.children === undefined || menuItemDefinition.children.length === 0 ? (
+    <MenuItem
+      class:list={[menuItemClass]}
+      class="menu-item"
+      settings={settings}
+      menuItemDefinition={menuItemDefinition}
+      {...rest}
+    />
+  ) : (
+    <div
+      class:list={['expandable-item', classNames]}
+      {...rest}
+    >
+      <div class="base">
+        <MenuItem
+          class:list={[menuItemClass]}
+          class="menu-item"
+          settings={settings}
+          menuItemDefinition={menuItemDefinition}
+          {...rest}
+        />
+        <div class="expand-control">
+          <div class="not-expanded-icon">
+            <NotExpandedSvg
+              width="1em"
+              height="1em"
+            />
+          </div>
+          <div class="expanded-icon">
+            <ExpandedSvg
+              width="1em"
+              height="1em"
+            />
+          </div>
         </div>
+      </div>
+      {menuItemDefinition.children !== undefined && menuItemDefinition.children.length > 0 && (
+        <menu class="sub-menu">
+          {menuItemDefinition.children.map((childDefinition) => (
+            <MenuItem
+              class:list={[menuItemClass]}
+              class="menu-item"
+              settings={settings}
+              menuItemDefinition={childDefinition}
+              {...rest}
+            />
+          ))}
+        </menu>
+      )}
+    </div>
+  )
 }
 
-<style lang="scss" define:vars={{
-    "amm-expandControlBackgroundColor": settings?.expandControlBackgroundColor,
-    "amm-notExpandedIconColor": settings?.notExpandedIconColor,
-    "amm-expandedIconColor": settings?.expandedIconColor,
-    "amm-wideSubMenuFontFamily": settings?.wideSubMenuFontFamily,
-    "amm-wideSubMenuFontSize": settings?.wideSubMenuFontSize,
-    "amm-wideSubMenuBackgroundColor": settings?.wideSubMenuBackgroundColor,
-    "amm-wideSubMenuBoxShadow": settings?.wideSubMenuBoxShadow,
-    "amm-wideSubMenuFlexGap": settings?.wideSubMenuFlexGap,
-    "amm-wideSubMenuMargin": settings?.wideSubMenuMargin,
-    "amm-wideSubMenuPadding": settings?.wideSubMenuPadding,
-    "amm-narrowSubMenuFontFamily": settings?.narrowSubMenuFontFamily,
-    "amm-narrowSubMenuFontSize": settings?.narrowSubMenuFontSize,
-    "amm-narrowMenuItemPadding": settings?.narrowMenuItemPadding,
-    "amm-narrowSubMenuFlexGap": settings?.narrowSubMenuFlexGap,
-    "amm-narrowSubMenuMargin": settings?.narrowSubMenuMargin,
-    "amm-narrowSubMenuPadding": settings?.narrowSubMenuPadding,
-    "amm-narrowSubMenuMenuItemPadding": settings?.narrowSubMenuMenuItemPadding,
-    "amm-narrowSubMenuBackgroundColor": settings?.narrowSubMenuBackgroundColor,
-}}>
-    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+<style
+  lang="scss"
+  define:vars={{
+    'amm-expandControlBackgroundColor': settings?.expandControlBackgroundColor,
+    'amm-notExpandedIconColor': settings?.notExpandedIconColor,
+    'amm-expandedIconColor': settings?.expandedIconColor,
+    'amm-wideSubMenuFontFamily': settings?.wideSubMenuFontFamily,
+    'amm-wideSubMenuFontSize': settings?.wideSubMenuFontSize,
+    'amm-wideSubMenuBackgroundColor': settings?.wideSubMenuBackgroundColor,
+    'amm-wideSubMenuBoxShadow': settings?.wideSubMenuBoxShadow,
+    'amm-wideSubMenuFlexGap': settings?.wideSubMenuFlexGap,
+    'amm-wideSubMenuMargin': settings?.wideSubMenuMargin,
+    'amm-wideSubMenuPadding': settings?.wideSubMenuPadding,
+    'amm-narrowSubMenuFontFamily': settings?.narrowSubMenuFontFamily,
+    'amm-narrowSubMenuFontSize': settings?.narrowSubMenuFontSize,
+    'amm-narrowMenuItemPadding': settings?.narrowMenuItemPadding,
+    'amm-narrowSubMenuFlexGap': settings?.narrowSubMenuFlexGap,
+    'amm-narrowSubMenuMargin': settings?.narrowSubMenuMargin,
+    'amm-narrowSubMenuPadding': settings?.narrowSubMenuPadding,
+    'amm-narrowSubMenuMenuItemPadding': settings?.narrowSubMenuMenuItemPadding,
+    'amm-narrowSubMenuBackgroundColor': settings?.narrowSubMenuBackgroundColor,
+  }}
+>
+  @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
+  .expandable-item {
+    position: relative;
+    display: block;
+    flex-direction: column;
+
+    > .base {
+      display: flex;
+      align-items: stretch;
+
+      > .expand-control {
+        display: flex;
+        align-items: center;
+
+        > .expanded-icon {
+          display: none;
+          align-items: center;
+          width: 1em;
+          color: var(--amm-expandedIconColor, #586f8a);
+        }
+
+        > .not-expanded-icon {
+          display: flex;
+          align-items: center;
+          width: 1em;
+          color: var(--amm-notExpandedIconColor, #586f8a);
+        }
+      }
+    }
+
+    > .sub-menu {
+      position: absolute;
+      flex-direction: column;
+      font-family: var(--amm-wideSubMenuFontFamily, inherit);
+      font-size: var(--amm-wideSubMenuFontSize, 90%);
+      gap: var(--amm-wideSubMenuFlexGap, 0.18rem);
+      margin: var(--amm-wideSubMenuMargin, 0);
+      padding: var(--amm-wideSubMenuPadding, 0.1rem 0.2rem 0.1rem 0.2rem);
+      background-color: var(--amm-wideSubMenuBackgroundColor, #d0dae0);
+      box-shadow: var(--amm-wideSubMenuBoxShadow, 0.12rem 0.12rem 0.12rem #2f3340);
+      display: none;
+    }
+  }
+
+  /* Make sure lines up with below and @media in NavBar */
+  @media screen and (hover: hover) and (width >= main-menu-config.$narrow-breakpoint) {
     .expandable-item {
-        position: relative;
-        display: block;
-        flex-direction: column;
+      > .base {
+        > .expand-control {
+          pointer-events: none;
+        }
+      }
+
+      &:hover,
+      &:focus-within {
+        > .sub-menu {
+          display: flex;
+        }
 
         > .base {
-            display: flex;
-            align-items: stretch;
-
-            > .expand-control {
-                display: flex;
-                align-items: center;
-
-                > .expanded-icon {
-                    display: none;
-                    align-items: center;
-                    width: 1em;
-                    color: var(--amm-expandedIconColor, #586f8a);
-                }
-
-                > .not-expanded-icon {
-                    display: flex;
-                    align-items: center;
-                    width: 1em;
-                    color: var(--amm-notExpandedIconColor, #586f8a);
-                }
+          > .expand-control {
+            > .expanded-icon {
+              display: flex;
             }
+
+            > .not-expanded-icon {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Make sure lines up with above and @media in NavBar */
+  @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+    .expandable-item {
+      position: static;
+
+      > .base {
+        display: flex;
+
+        > .menu-item {
+          padding: var(--amm-narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
         }
 
+        > .expand-control {
+          flex: 1 1 auto;
+          padding-left: 0.2em;
+          background-color: var(--amm-expandControlBackgroundColor, #bcc3c8);
+          cursor: pointer;
+        }
+      }
+
+      > .sub-menu {
+        position: static;
+        font-family: var(--amm-narrowSubMenuFontFamily, inherit);
+        font-size: var(--amm-narrowSubMenuFontSize, 90%);
+        gap: var(--amm-narrowSubMenuFlexGap, 0.18rem);
+        margin: var(--amm-narrowSubMenuMargin, -0.18rem 0 0 0);
+        padding: var(--amm-narrowSubMenuPadding, 0.36rem 0 0 0);
+        background-color: var(--amm-narrowSubMenuBackgroundColor, #bcc3c8);
+        box-shadow: none;
+
+        > .menu-item {
+          padding: var(--amm-narrowSubMenuMenuItemPadding, 0 0 0 1.7rem);
+        }
+      }
+
+      &.expanded {
         > .sub-menu {
-            position: absolute;
-            flex-direction: column;
-            font-family: var(--amm-wideSubMenuFontFamily, inherit);
-            font-size: var(--amm-wideSubMenuFontSize, 90%);
-            gap: var(--amm-wideSubMenuFlexGap, 0.18rem);
-            margin: var(--amm-wideSubMenuMargin, 0);
-            padding: var(--amm-wideSubMenuPadding, 0.1rem 0.2rem 0.1rem 0.2rem);
-            background-color: var(--amm-wideSubMenuBackgroundColor, #d0dae0);
-            box-shadow: var(--amm-wideSubMenuBoxShadow, 0.12rem 0.12rem 0.12rem #2f3340);
-            display: none;
+          display: flex;
         }
-    }
 
-    /* Make sure lines up with below and @media in NavBar */
-    @media screen and (hover: hover) and (width >= main-menu-config.$narrow-breakpoint) {
-        .expandable-item {
-            > .base {
-                > .expand-control {
-                    pointer-events: none;
-                }
+        > .base {
+          > .expand-control {
+            > .expanded-icon {
+              display: flex;
             }
 
-            &:hover,
-            &:focus-within {
-                > .sub-menu {
-                    display: flex;
-                }
-
-                > .base {
-                    > .expand-control {
-                        > .expanded-icon {
-                            display: flex;
-                        }
-
-                        > .not-expanded-icon {
-                            display: none;
-                        }
-                    }
-                }
+            > .not-expanded-icon {
+              display: none;
             }
+          }
         }
+      }
     }
-
-    /* Make sure lines up with above and @media in NavBar */
-    @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
-        .expandable-item {
-            position: static;
-
-            > .base {
-                display: flex;
-
-                > .menu-item {
-                    padding: var(--amm-narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
-                }
-
-                > .expand-control {
-                    flex: 1 1 auto;
-                    padding-left: 0.2em;
-                    background-color: var(--amm-expandControlBackgroundColor, #bcc3c8);
-                    cursor: pointer;
-                }
-            }
-
-            > .sub-menu {
-                position: static;
-                font-family: var(--amm-narrowSubMenuFontFamily, inherit);
-                font-size: var(--amm-narrowSubMenuFontSize, 90%);
-                gap: var(--amm-narrowSubMenuFlexGap, 0.18rem);
-                margin: var(--amm-narrowSubMenuMargin, -0.18rem 0 0 0);
-                padding: var(--amm-narrowSubMenuPadding, 0.36rem 0 0 0);
-                background-color: var(--amm-narrowSubMenuBackgroundColor, #bcc3c8);
-                box-shadow: none;
-
-                > .menu-item {
-                    padding: var(--amm-narrowSubMenuMenuItemPadding, 0 0 0 1.7rem);
-                }
-            }
-
-            &.expanded {
-                > .sub-menu {
-                    display: flex;
-                }
-
-                > .base {
-                    > .expand-control {
-                        > .expanded-icon {
-                            display: flex;
-                        }
-
-                        > .not-expanded-icon {
-                            display: none;
-                        }
-                    }
-                }
-            }
-        }
-    }
+  }
 </style>

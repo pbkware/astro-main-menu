@@ -3,63 +3,69 @@ import { type MenuItemDefinition } from '../ts-types/menu-item-definition';
 import type { MenuItemSettings } from '../ts-types/settings';
 
 export interface Props {
-    class: string;
-    settings?: MenuItemSettings;
-    menuItemDefinition: MenuItemDefinition;
-    rest?: unknown;
-};
+  class: string;
+  settings?: MenuItemSettings;
+  menuItemDefinition: MenuItemDefinition;
+  rest?: unknown;
+}
 
 const { class: className, settings, menuItemDefinition, ...rest } = Astro.props;
 const clickHandlerType = menuItemDefinition.clickHandlerType;
 const useAnchorTag = clickHandlerType === 'anchorTag' || (clickHandlerType === undefined && menuItemDefinition.url !== undefined);
 ---
+
 {
-    (useAnchorTag) ?
-        <a
-            class:list={['menu-item', className]} {...rest}
-            href={menuItemDefinition.url}
-            title={menuItemDefinition.title}
-        >
-            {menuItemDefinition.text}
-        </a>
-    :
-        <div
-            class:list={['menu-item', className]} {...rest}
-            title={menuItemDefinition.title}
-            data-url={menuItemDefinition.url}
-            data-id={menuItemDefinition.id}
-            data-data={menuItemDefinition.data}
-        >
-            {menuItemDefinition.text}
-        </div>
+  useAnchorTag ? (
+    <a
+      class:list={['menu-item', className]}
+      {...rest}
+      href={menuItemDefinition.url}
+      title={menuItemDefinition.title}
+    >
+      {menuItemDefinition.text}
+    </a>
+  ) : (
+    <div
+      class:list={['menu-item', className]}
+      {...rest}
+      title={menuItemDefinition.title}
+      data-url={menuItemDefinition.url}
+      data-id={menuItemDefinition.id}
+      data-data={menuItemDefinition.data}
+    >
+      {menuItemDefinition.text}
+    </div>
+  )
 }
 
+<style
+  lang="scss"
+  define:vars={{
+    'amm-menuItemTextDecoration': settings?.menuItemTextDecoration,
+    'amm-menuItemColor': settings?.menuItemColor,
+    'amm-menuItemMargin': settings?.menuItemMargin,
+    'amm-menuItemPadding': settings?.menuItemPadding,
+    'amm-menuItemHoverBackgroundColor': settings?.menuItemHoverBackgroundColor,
+  }}
+>
+  @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
-<style lang="scss" define:vars={{
-    "amm-menuItemTextDecoration": settings?.menuItemTextDecoration,
-    "amm-menuItemColor": settings?.menuItemColor,
-    "amm-menuItemMargin": settings?.menuItemMargin,
-    "amm-menuItemPadding": settings?.menuItemPadding,
-    "amm-menuItemHoverBackgroundColor": settings?.menuItemHoverBackgroundColor,
-}}>
-    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+  .menu-item {
+    color: var(--amm-menuItemColor, #021426);
+    display: block;
+    margin: var(--amm-menuItemMargin, 0);
+    padding: var(--amm-menuItemPadding, 0);
+    white-space: nowrap;
+    text-decoration: var(--amm-menuItemTextDecoration, none);
+    overflow-x: hidden;
+    cursor: pointer;
 
-    .menu-item {
-        color: var(--amm-menuItemColor, #021426);
-        display: block;
-        margin: var(--amm-menuItemMargin, 0);
-        padding: var(--amm-menuItemPadding, 0);
-        white-space: nowrap;
-        text-decoration: var(--amm-menuItemTextDecoration, none);
-        overflow-x: hidden;
-        cursor: pointer;
-
-        &:hover {
-            background-color: var(--amm-menuItemHoverBackgroundColor, #97c7e7);
-        }
-
-        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
-            padding: var(--amm-narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
-        }
+    &:hover {
+      background-color: var(--amm-menuItemHoverBackgroundColor, #97c7e7);
     }
+
+    @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+      padding: var(--amm-narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
+    }
+  }
 </style>

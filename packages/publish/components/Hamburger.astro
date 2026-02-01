@@ -2,89 +2,96 @@
 import type { HamburgerSettings } from '../ts-types/settings';
 
 export interface Props {
-    class?: string;
-    settings?: HamburgerSettings;
-    rest?: unknown;
-};
+  class?: string;
+  settings?: HamburgerSettings;
+  rest?: unknown;
+}
 
 const { class: classNames, settings, ...rest } = Astro.props;
 ---
 
-<div class:list={['hamburger', classNames]} {...rest}></div>
+<div
+  class:list={['hamburger', classNames]}
+  {...rest}
+>
+</div>
 
-<style lang="scss" define:vars={{
-    "amm-hamburgerActiveTop": settings?.activeTop,
-    "amm-hamburgerActiveLeft": settings?.activeLeft,
-    "amm-hamburgerActiveRight": settings?.activeRight,
-    "amm-hamburgerWidth": settings?.width,
-    "amm-hamburgerHeight": settings?.height,
-    "amm-hamburgerPointer": settings?.pointer,
-    "amm-hamburgerTopLineTop": settings?.topLineTop,
-    "amm-hamburgerTopLineHeight": settings?.topLineHeight,
-    "amm-hamburgerTopLineBackgroundColor": settings?.topLineBackgroundColor,
-    "amm-hamburgerTopLineTransition": settings?.topLineTransition,
-    "amm-hamburgerBottomLineOffset": settings?.bottomLineBottom,
-    "amm-hamburgerBottomLineWidth": settings?.bottomLineWidth,
-    "amm-hamburgerBottomLineHeight": settings?.bottomLineHeight,
-    "amm-hamburgerBottomLineBackgroundColor": settings?.bottomLineBackgroundColor,
-    "amm-hamburgerBottomLineTransition": settings?.bottomLineTransition,
-    "amm-narrowMainMenuFontSize": settings?.narrowMainMenuFontSize,
-}}>
-    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+<style
+  lang="scss"
+  define:vars={{
+    'amm-hamburgerActiveTop': settings?.activeTop,
+    'amm-hamburgerActiveLeft': settings?.activeLeft,
+    'amm-hamburgerActiveRight': settings?.activeRight,
+    'amm-hamburgerWidth': settings?.width,
+    'amm-hamburgerHeight': settings?.height,
+    'amm-hamburgerPointer': settings?.pointer,
+    'amm-hamburgerTopLineTop': settings?.topLineTop,
+    'amm-hamburgerTopLineHeight': settings?.topLineHeight,
+    'amm-hamburgerTopLineBackgroundColor': settings?.topLineBackgroundColor,
+    'amm-hamburgerTopLineTransition': settings?.topLineTransition,
+    'amm-hamburgerBottomLineOffset': settings?.bottomLineBottom,
+    'amm-hamburgerBottomLineWidth': settings?.bottomLineWidth,
+    'amm-hamburgerBottomLineHeight': settings?.bottomLineHeight,
+    'amm-hamburgerBottomLineBackgroundColor': settings?.bottomLineBackgroundColor,
+    'amm-hamburgerBottomLineTransition': settings?.bottomLineTransition,
+    'amm-narrowMainMenuFontSize': settings?.narrowMainMenuFontSize,
+  }}
+>
+  @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
-    .hamburger {
-        display: none;
-        pointer-events: none;
+  .hamburger {
+    display: none;
+    pointer-events: none;
 
-        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
-            display: block;
-            pointer-events: all;
-            position: relative;
-            width: var(--amm-hamburgerWidth, 1.8em);
-            height: var(--amm-hamburgerHeight, 0.8em);
-            cursor: var(--amm-hamburgerPointer, pointer);
-            z-index:100;
-            overflow: hidden;
+    @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+      display: block;
+      pointer-events: all;
+      position: relative;
+      width: var(--amm-hamburgerWidth, 1.8em);
+      height: var(--amm-hamburgerHeight, 0.8em);
+      cursor: var(--amm-hamburgerPointer, pointer);
+      z-index: 100;
+      overflow: hidden;
 
-            &::before {
-                top: var(--amm-hamburgerTopLineTop, 0.1em);
-                right: 0;
-                content: '';
-                position: absolute;
-                width: var(--amm-hamburgerWidth, 1.8em);
-                height: var(--amm-hamburgerTopLineHeight, 0.2em);
-                background-color: var(--amm-hamburgerTopLineBackgroundColor, #3a62e5);
-                transition: var(--amm-hamburgerTopLineTransition, all 0.3s ease-in-out);
-            }
+      &::before {
+        top: var(--amm-hamburgerTopLineTop, 0.1em);
+        right: 0;
+        content: '';
+        position: absolute;
+        width: var(--amm-hamburgerWidth, 1.8em);
+        height: var(--amm-hamburgerTopLineHeight, 0.2em);
+        background-color: var(--amm-hamburgerTopLineBackgroundColor, #3a62e5);
+        transition: var(--amm-hamburgerTopLineTransition, all 0.3s ease-in-out);
+      }
 
-            &::after {
-                bottom: var(--amm-hamburgerBottomLineBottom, 0.1em);
-                right:0;
-                content: '';
-                position: absolute;
-                width: var(--amm-hamburgerBottomLineWidth, 1.4em);
-                height: var(--amm-hamburgerBottomLineHeight, 0.2em);
-                background-color: var(--amm-hamburgerBottomLineBackgroundColor, #3a62e5);
-                transition: var(--amm-hamburgerBottomLineTransition, transform 0.3s ease-in-out);
-            }
+      &::after {
+        bottom: var(--amm-hamburgerBottomLineBottom, 0.1em);
+        right: 0;
+        content: '';
+        position: absolute;
+        width: var(--amm-hamburgerBottomLineWidth, 1.4em);
+        height: var(--amm-hamburgerBottomLineHeight, 0.2em);
+        background-color: var(--amm-hamburgerBottomLineBackgroundColor, #3a62e5);
+        transition: var(--amm-hamburgerBottomLineTransition, transform 0.3s ease-in-out);
+      }
 
-            &.active {
-                position: absolute;
-                top: var(--amm-hamburgerActiveTop, 0);
-                right: var(--amm-hamburgerActiveRight, 0);
-                left: var(--amm-hamburgerActiveLeft);
-                font-size: var(--amm-narrowMainMenuFontSize, 1.8rem);
+      &.active {
+        position: absolute;
+        top: var(--amm-hamburgerActiveTop, 0);
+        right: var(--amm-hamburgerActiveRight, 0);
+        left: var(--amm-hamburgerActiveLeft);
+        font-size: var(--amm-narrowMainMenuFontSize, 1.8rem);
 
-                /* Rotate the before and after lines to create the close hamburger effect */
-                &::before {
-                    width: var(--amm-hamburgerBottomLineWidth, 1.4em);
-                    transform: rotate(-45deg) translate(-0.21em, 0.21em);
-                }
-
-                &::after {
-                    transform: rotate(45deg) translate(-0.21em, -0.21em);
-                }
-            }
+        /* Rotate the before and after lines to create the close hamburger effect */
+        &::before {
+          width: var(--amm-hamburgerBottomLineWidth, 1.4em);
+          transform: rotate(-45deg) translate(-0.21em, 0.21em);
         }
+
+        &::after {
+          transform: rotate(45deg) translate(-0.21em, -0.21em);
+        }
+      }
     }
+  }
 </style>

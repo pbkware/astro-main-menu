@@ -2,7 +2,9 @@ import { navigate } from 'astro/virtual-modules/transitions-router.js';
 /** Processes menu item clicks.  Only access this class via MenuClickProcessor.get() as only a single instance can exist (singleton) */
 export class MenuClickProcessor {
     constructor() {
-        document.addEventListener('astro:before-swap', () => { this._expandedExpandableItemElement = undefined; }); // Ensure there is no reference to an ExpandableItem
+        document.addEventListener('astro:before-swap', () => {
+            this._expandedExpandableItemElement = undefined;
+        }); // Ensure there is no reference to an ExpandableItem
         document.addEventListener('astro:after-swap', () => this.initialisePage());
         this.initialisePage();
     }
