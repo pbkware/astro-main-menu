@@ -64,7 +64,7 @@ const useAnchorTag = clickHandlerType === 'anchorTag' || (clickHandlerType === u
       background-color: var(--amm-menuItemHoverBackgroundColor, #97c7e7);
     }
 
-    @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+    @media screen and (hover: none), screen and (width < main-menu-config.$narrow-breakpoint) {
       padding: var(--amm-narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
     }
   }

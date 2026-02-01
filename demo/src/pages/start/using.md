@@ -86,7 +86,7 @@ const navBackgroundColor = '#D6DAE0';
       flex: 0 0 auto;
     }
 
-    @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+    @media screen and (hover: none), screen and (width < main-menu-config.$narrow-breakpoint) {
       > .narrow-heading {
         display: flex;
         align-items: center;
@@ -284,7 +284,7 @@ The following @media query is used to determine whether MainMenu and Hamburger a
 
 ```scss
 @use '/src/styles/scss/main-menu-config';
-@media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+@media screen and (hover: none), screen and (width < main-menu-config.$narrow-breakpoint) {
   ...
 }
 ```

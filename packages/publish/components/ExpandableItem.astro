@@ -169,7 +169,7 @@ const { class: classNames, menuItemClass, settings, menuItemDefinition, ...rest 
   }
 
   /* Make sure lines up with above and @media in NavBar */
-  @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+  @media screen and (hover: none), screen and (width < main-menu-config.$narrow-breakpoint) {
     .expandable-item {
       position: static;
 

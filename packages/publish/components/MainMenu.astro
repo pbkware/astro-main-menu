@@ -63,7 +63,7 @@ const { class: classNames, expandableItemClass, menuItemClass, settings, menuIte
     padding: var(--amm-mainMenuPadding, 0);
     gap: var(--amm-wideMainMenuFlexGap, 0.8em);
 
-    @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+    @media screen and (hover: none), screen and (width < main-menu-config.$narrow-breakpoint) {
       display: none;
 
       &.displayed {

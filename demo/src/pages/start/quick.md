@@ -142,7 +142,7 @@ const menuItemDefinitions: MenuItemDefinition[] = [
             flex: 0 0 auto;
         }
 
-        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
+        @media screen and (hover: none), screen and (width < main-menu-config.$narrow-breakpoint) {
             > .narrow-heading {
                 display: flex;
                 align-items: center;

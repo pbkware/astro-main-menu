@@ -3,6 +3,7 @@
 # Compiled output
 /dist
 /ts-out
+/ts-types
 /tmp
 /out-tsc
 /bazel-out
