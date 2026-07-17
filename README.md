@@ -5,11 +5,13 @@
 Responsive Main Menu and Hamburger components for [Astro](https://astro.build)
 
 ## Install
-```
+
+```shell
 npm install @pbkware/astro-main-menu
 ```
 
 ## Features
+
 * 2 levels of menu items.
 * Wide and narrow to support desktop and mobile.
 * Configurable breakpoint to switch between wide and narrow.
@@ -22,7 +24,9 @@ npm install @pbkware/astro-main-menu
 * Supports Astro View Transitions.
 
 ## Demo and More information
+
 [https://pbkware.klink.au/astro-main-menu/](https://pbkware.klink.au/astro-main-menu/)
 
 ## Sponsored by
-[Xilytix](https://xilytix.com)
+
+[Motif Markets](https://motifmarkets.com)

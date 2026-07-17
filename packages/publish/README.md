@@ -6,7 +6,7 @@ Responsive Main Menu and Hamburger components for [Astro](https://astro.build)
 
 ## Install
 
-```
+```shell
 npm install @pbkware/astro-main-menu
 ```
 
@@ -29,4 +29,4 @@ npm install @pbkware/astro-main-menu
 
 ## Sponsored by
 
-[Xilytix](https://xilytix.com)
+[Motif Markets](https://motifmarkets.com)

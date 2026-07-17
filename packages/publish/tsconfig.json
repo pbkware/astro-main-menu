@@ -4,10 +4,10 @@
   "compilerOptions": {
     "allowJs": true,
     "module": "ES2022",
+    "rootDir": "./src",
     "outDir": "ts-out",
     "target": "ES2021",
     "jsx": "preserve",
-    "baseUrl": "./",
     "moduleResolution": "bundler",
     "declarationDir": "ts-types"
   },

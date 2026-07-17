@@ -1,7 +1,7 @@
 {
   "name": "@pbkware/astro-main-menu",
   "description": "Responsive Main Menu and Hamburger components for Astro",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "type": "module",
   "types": "./index.d.ts",
   "exports": {
@@ -40,12 +40,13 @@
   },
   "homepage": "https://pbkware.klink.au/astro-main-menu/",
   "dependencies": {
-    "astro": "^5.0.8"
+    "@astrojs/mdx": "^7.0.3",
+    "astro": "^7.0.9"
   },
   "devDependencies": {
-    "prettier": "3.8.1",
+    "prettier": "^3.9.5",
     "prettier-plugin-astro": "0.14.1",
-    "typescript": "^5.0.4",
-    "vite": "^7.1.9"
+    "typescript": "^7.0.2",
+    "vite": "^8.1.4"
   }
 }

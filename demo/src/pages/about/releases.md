@@ -3,15 +3,21 @@ layout: ../../layouts/Base.astro
 title: 'Releases'
 ---
 
+- **4.1.0** - 17 Jul 2026
+  - Built with Astro 7.0.9 (including vite 8)
+
 - **4.0.0** - 1st Feb 2026
   - Add prettier
   - **Breaking**: Fix use of @media queries in line with [Sass breaking change](https://sass-lang.com/documentation/breaking-changes/media-logic/) related to Sass supporting Media Queries Level 4\.
   Can no longer use Sass `or` operator in media queries. Need to use `,` as in CSS media queries.  This means that instead of using:
-    ```
+
+    ```scss
     @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint))
     ```
+
     need to use:
-    ```
+
+    ```scss
     @media screen and (hover: none), screen and (width < main-menu-config.$narrow-breakpoint)
     ```
   
