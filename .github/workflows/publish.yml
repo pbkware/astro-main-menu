@@ -32,7 +32,7 @@ jobs:
         working-directory: ./packages/publish
 
       - name: Publish to npm
-        run: npm publish --provenance --access public
+        run: npm stage publish --provenance --access public
         working-directory: ./packages/publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
